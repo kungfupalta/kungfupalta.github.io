@@ -1,1 +1,473 @@
 <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELLIEVERSO</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000010;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Fondo estelar */
+        #stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+        }
+        
+        /* Título gigante */
+        .title-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(to bottom, rgba(0, 0, 20, 0.9), rgba(0, 0, 20, 0));
+        }
+        
+        h1 {
+            font-size: 10rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+            letter-spacing: 10px;
+            animation: titleGlow 4s infinite alternate;
+            line-height: 1;
+        }
+        
+        @keyframes titleGlow {
+            0% {
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.4),
+                             0 0 60px rgba(255, 0, 255, 0.3),
+                             0 0 90px rgba(0, 255, 255, 0.2);
+            }
+            100% {
+                text-shadow: 0 0 40px rgba(255, 255, 255, 0.6),
+                             0 0 80px rgba(255, 0, 255, 0.5),
+                             0 0 120px rgba(0, 255, 255, 0.4),
+                             0 0 160px rgba(255, 255, 0, 0.3);
+            }
+        }
+        
+        /* Contenedor de fotos */
+        .photos-container {
+            position: relative;
+            min-height: 3000px;
+            padding-bottom: 200px;
+        }
+        
+        /* Estilos para cada foto */
+        .photo {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+            border: 4px solid;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
+            transition: transform 0.3s;
+            cursor: pointer;
+            z-index: 2;
+        }
+        
+        .photo:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+        
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Bordes de colores diferentes para cada foto */
+        .photo:nth-child(1) { border-color: #ff00ff; }
+        .photo:nth-child(2) { border-color: #00ffff; }
+        .photo:nth-child(3) { border-color: #ffff00; }
+        .photo:nth-child(4) { border-color: #ff5500; }
+        .photo:nth-child(5) { border-color: #aa00ff; }
+        .photo:nth-child(6) { border-color: #00ffaa; }
+        .photo:nth-child(7) { border-color: #ff0066; }
+        .photo:nth-child(8) { border-color: #00aaff; }
+        .photo:nth-child(9) { border-color: #ffaa00; }
+        .photo:nth-child(10) { border-color: #aa55ff; }
+        .photo:nth-child(11) { border-color: #55ffaa; }
+        .photo:nth-child(12) { border-color: #ff5555; }
+        .photo:nth-child(13) { border-color: #5555ff; }
+        .photo:nth-child(14) { border-color: #55ffff; }
+        .photo:nth-child(15) { border-color: #ff55ff; }
+        
+        /* Animaciones */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(8deg); }
+            75% { transform: translateY(15px) rotate(-8deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-40px); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-20px); }
+            75% { transform: translateX(20px); }
+        }
+        
+        @keyframes orbit {
+            0% { transform: rotate(0deg) translateX(200px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(200px) rotate(-360deg); }
+        }
+        
+        /* Flecha indicadora */
+        .scroll-arrow {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #a0a0ff;
+            font-size: 3rem;
+            animation: arrowBounce 2s infinite;
+            opacity: 0.8;
+        }
+        
+        @keyframes arrowBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            h1 {
+                font-size: 8rem;
+            }
+            
+            .photo {
+                width: 250px;
+                height: 250px;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            h1 {
+                font-size: 5rem;
+                letter-spacing: 5px;
+            }
+            
+            .photo {
+                width: 200px;
+                height: 200px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 3.5rem;
+                letter-spacing: 3px;
+            }
+            
+            .photo {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .scroll-arrow {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fondo de estrellas -->
+    <div id="stars"></div>
+    
+    <!-- Título gigante -->
+    <div class="title-container">
+        <h1>ELLIEVERSO</h1>
+        <div class="scroll-arrow">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </div>
+    
+    <!-- Contenedor de fotos -->
+    <div class="photos-container" id="photosContainer">
+        <!-- 
+            AQUÍ VAN TUS FOTOS DE ELLIE
+            Reemplaza las URLs de src con las URLs de tus imágenes
+        -->
+        
+        <!-- Foto 1 -->
+        <div class="photo" style="left: 5%; top: 110vh;" data-animation="float">
+            <img src="img/1.png" alt="Ellie en el Ellieverso">
+        </div>
+        
+        <!-- Foto 2 -->
+        <div class="photo" style="left: 75%; top: 120vh;" data-animation="pulse">
+            <img src="img/2.png" alt="Ellie explorando">
+        </div>
+        
+        <!-- Foto 3 -->
+        <div class="photo" style="left: 15%; top: 160vh;" data-animation="shake">
+            <img src="img/IMG-20240705-WA0315-removebg-preview.png" alt="Ellie cósmica">
+        </div>
+        
+        <!-- Foto 4 -->
+        <div class="photo" style="left: 65%; top: 190vh;" data-animation="float">
+            <img src="img/4.png" alt="Ellie estelar">
+        </div>
+        
+        <!-- Foto 5 -->
+        <div class="photo" style="left: 10%; top: 230vh;" data-animation="bounce">
+            <img src="img/5.png" alt="Ellie lunar">
+        </div>
+        
+        <!-- Foto 6 -->
+        <div class="photo" style="left: 80%; top: 260vh;" data-animation="spin">
+            <img src="img/6.png" alt="Ellie galáctica">
+        </div>
+        
+        <!-- Foto 7 -->
+        <div class="photo" style="left: 20%; top: 300vh;" data-animation="pulse">
+            <img src="img/7.png" alt="Ellie espacial">
+        </div>
+        
+        <!-- Foto 8 -->
+        <div class="photo" style="left: 70%; top: 340vh;" data-animation="shake">
+            <img src="img/8.png" alt="Ellie dimensional">
+        </div>
+        
+        <!-- Foto 9 -->
+        <div class="photo" style="left: 5%; top: 380vh;" data-animation="float">
+            <img src="img/9.png" alt="Ellie cósmica">
+        </div>
+        
+        <!-- Foto 10 -->
+        <div class="photo" style="left: 85%; top: 420vh;" data-animation="bounce">
+            <img src="img/10.png" alt="Ellie universal">
+        </div>
+        
+        <!-- 
+            Puedes agregar más fotos aquí
+            Solo copia y pega una de las divisiones de arriba y cambia:
+            1. La URL de la imagen en "src"
+            2. La posición (left y top) para que no se superpongan
+            3. La animación (data-animation) si quieres
+        -->
+        
+    </div>
+
+    <script>
+        // Crear estrellas de fondo
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 300;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Tamaño aleatorio
+                const size = Math.random() * 4 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // Posición aleatoria
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // Opacidad aleatoria
+                star.style.opacity = Math.random() * 0.9 + 0.1;
+                
+                // Velocidad de movimiento
+                const speed = Math.random() * 0.4 + 0.1;
+                star.dataset.speed = speed;
+                
+                // Algunas estrellas parpadean
+                if (Math.random() > 0.7) {
+                    star.style.animation = `starTwinkle ${Math.random() * 3 + 2}s infinite alternate`;
+                }
+                
+                starsContainer.appendChild(star);
+            }
+            
+            // Animar estrellas
+            function animateStars() {
+                const stars = document.querySelectorAll('.star');
+                
+                stars.forEach(star => {
+                    let top = parseFloat(star.style.top);
+                    top -= parseFloat(star.dataset.speed);
+                    
+                    // Si la estrella sale de la pantalla, reiniciarla abajo
+                    if (top < -5) {
+                        top = 105;
+                        star.style.left = `${Math.random() * 100}%`;
+                    }
+                    
+                    star.style.top = `${top}%`;
+                });
+                
+                requestAnimationFrame(animateStars);
+            }
+            
+            animateStars();
+            
+            // Añadir keyframes para el parpadeo
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes starTwinkle {
+                    0%, 100% { opacity: 0.2; }
+                    50% { opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Aplicar animaciones a las fotos
+        function applyAnimations() {
+            const photos = document.querySelectorAll('.photo');
+            const animations = ['spin', 'float', 'pulse', 'bounce', 'shake'];
+            
+            photos.forEach(photo => {
+                // Si ya tiene una animación definida, usarla
+                const presetAnimation = photo.getAttribute('data-animation');
+                let animation = presetAnimation;
+                
+                // Si no tiene animación predefinida, asignar una aleatoria
+                if (!animation || animation === 'random') {
+                    animation = animations[Math.floor(Math.random() * animations.length)];
+                }
+                
+                // Duración aleatoria entre 3 y 8 segundos
+                const duration = Math.random() * 5 + 3;
+                
+                // Retraso aleatorio para que no todas empiecen al mismo tiempo
+                const delay = Math.random() * 2;
+                
+                // Aplicar la animación
+                photo.style.animation = `${animation} ${duration}s infinite ${delay}s`;
+                
+                // Añadir efecto de brillo aleatorio
+                if (Math.random() > 0.5) {
+                    const glowColor = getComputedStyle(photo).borderColor;
+                    photo.style.boxShadow = `0 0 40px ${glowColor}, 0 0 80px rgba(255, 255, 255, 0.2)`;
+                }
+            });
+        }
+        
+        // Reposicionar fotos para pantallas pequeñas
+        function repositionForMobile() {
+            const photos = document.querySelectorAll('.photo');
+            const screenWidth = window.innerWidth;
+            
+            if (screenWidth < 900) {
+                // En pantallas pequeñas, organizar las fotos de manera más vertical
+                photos.forEach((photo, index) => {
+                    // Posición más centrada
+                    const left = index % 2 === 0 ? '10%' : '60%';
+                    const top = 100 + (index * 30) + 'vh'; // Usamos vh para que sea relativo a la altura
+                    
+                    photo.style.left = left;
+                    photo.style.top = top;
+                });
+            }
+        }
+        
+        // Ocultar flecha cuando se haga scroll
+        function hideArrowOnScroll() {
+            const arrow = document.querySelector('.scroll-arrow');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    arrow.style.opacity = '0';
+                    arrow.style.transition = 'opacity 0.5s';
+                } else {
+                    arrow.style.opacity = '0.8';
+                }
+            });
+        }
+        
+        // Efecto al hacer clic en una foto
+        function setupPhotoClick() {
+            document.querySelectorAll('.photo').forEach(photo => {
+                photo.addEventListener('click', function() {
+                    // Ampliar la foto
+                    this.style.transform = 'scale(2.5)';
+                    this.style.zIndex = '100';
+                    this.style.transition = 'transform 0.5s, z-index 0.5s';
+                    
+                    // Pausar animación temporalmente
+                    const currentAnimation = this.style.animation;
+                    this.style.animation = 'none';
+                    
+                    // Volver al tamaño normal después de 2 segundos
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.zIndex = '2';
+                        this.style.animation = currentAnimation;
+                    }, 2000);
+                });
+            });
+        }
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            applyAnimations();
+            repositionForMobile();
+            hideArrowOnScroll();
+            setupPhotoClick();
+            
+            // Reposicionar cuando cambie el tamaño de la ventana
+            window.addEventListener('resize', repositionForMobile);
+        });
+        
+        // Instrucciones para agregar tus fotos
+        console.log("INSTRUCCIONES PARA AGREGAR TUS FOTOS DE ELLIE:");
+        console.log("1. Reemplaza las URLs en 'src' por las URLs de tus imágenes");
+        console.log("2. Puedes ajustar las posiciones cambiando 'left' y 'top' en el estilo");
+        console.log("3. Las animaciones disponibles son: float, pulse, bounce, shake, spin");
+        console.log("4. Para imágenes locales, súbelas a imgur.com y usa los enlaces directos");
+    </script>
+</body>
+</html>
