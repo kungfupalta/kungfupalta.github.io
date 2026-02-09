@@ -12,7 +12,7 @@
         }
         
         body {
-            background: #000010;
+            background: #0a0a1a;
             color: white;
             font-family: 'Arial', sans-serif;
             overflow-x: hidden;
@@ -39,6 +39,7 @@
         .title-container {
             height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
@@ -49,51 +50,90 @@
             font-size: 8rem;
             font-weight: 900;
             color: white;
-            letter-spacing: 10px;
+            letter-spacing: 15px;
             text-transform: uppercase;
             line-height: 1;
+            margin-bottom: 30px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #aaa;
+            letter-spacing: 3px;
+            opacity: 0.8;
         }
         
         /* Contenedor de fotos */
         .photos-container {
             position: relative;
-            min-height: 3000px;
+            min-height: 3500px;
             padding-bottom: 200px;
         }
         
-        /* Estilos para cada foto - SIN BORDES, SIN SOMBRAS */
+        /* Estilos para cada foto - Borde de la forma natural */
         .photo {
             position: absolute;
-            border-radius: 10px;
-            overflow: visible;
-            transition: transform 0.5s;
+            transition: transform 0.5s ease, filter 0.3s;
             cursor: pointer;
             z-index: 2;
-            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .photo:hover {
-            transform: scale(1.05);
-            z-index: 10;
+            transform: scale(1.1);
+            z-index: 20;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
         }
         
-        .photo img {
-            width: 100%;
-            height: 100%;
+        .photo-img {
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
-            border-radius: 10px;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
+        }
+        
+        /* Contenedor para el borde que sigue la forma */
+        .photo-border {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: linear-gradient(45deg, #ff6b9d, #ffd166, #06d6a0, #118ab2, #ef476f);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0.7;
+            animation: borderGlow 4s infinite alternate;
+        }
+        
+        @keyframes borderGlow {
+            0% {
+                opacity: 0.5;
+                filter: blur(5px);
+            }
+            100% {
+                opacity: 0.8;
+                filter: blur(8px);
+            }
         }
         
         /* Flecha indicadora */
         .scroll-arrow {
-            position: absolute;
-            bottom: 40px;
+            position: fixed;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             color: white;
-            font-size: 3rem;
+            font-size: 2.5rem;
             animation: arrowBounce 2s infinite;
             opacity: 0.6;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
         }
         
         @keyframes arrowBounce {
@@ -101,56 +141,114 @@
             50% { transform: translateX(-50%) translateY(10px); }
         }
         
-        /* Animaciones SUAVES */
+        /* Animaciones */
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-15px) rotate(2deg); }
-            75% { transform: translateY(8px) rotate(-2deg); }
+            25% { transform: translateY(-20px) rotate(3deg); }
+            75% { transform: translateY(10px) rotate(-3deg); }
         }
         
-        @keyframes gentlePulse {
+        @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
+            50% { transform: scale(1.05); }
         }
         
-        @keyframes gentleBounce {
+        @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-25px); }
         }
         
-        @keyframes gentleShake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
+        @keyframes sway {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-15px) rotate(2deg); }
+            75% { transform: translateX(15px) rotate(-2deg); }
         }
         
-        @keyframes gentleSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(5deg); }
+        @keyframes twist {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(5deg); }
+        }
+        
+        /* Botón para volver arriba */
+        .back-to-top {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 100;
+            display: none;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+        }
+        
+        .back-to-top:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
         }
         
         /* Responsive */
         @media (max-width: 1200px) {
             h1 {
                 font-size: 6rem;
+                letter-spacing: 12px;
+            }
+            
+            .photos-container {
+                min-height: 3000px;
             }
         }
         
         @media (max-width: 900px) {
             h1 {
                 font-size: 4rem;
-                letter-spacing: 5px;
+                letter-spacing: 8px;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+                letter-spacing: 2px;
+            }
+            
+            .photos-container {
+                min-height: 2500px;
+            }
+            
+            .scroll-arrow {
+                font-size: 2rem;
+                padding: 8px 16px;
             }
         }
         
         @media (max-width: 600px) {
             h1 {
-                font-size: 2.8rem;
-                letter-spacing: 3px;
+                font-size: 3rem;
+                letter-spacing: 5px;
+            }
+            
+            .subtitle {
+                font-size: 0.9rem;
+                letter-spacing: 1px;
+            }
+            
+            .photos-container {
+                min-height: 2200px;
             }
             
             .scroll-arrow {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                padding: 6px 12px;
+                bottom: 20px;
+            }
+            
+            .back-to-top {
+                bottom: 80px;
+                right: 20px;
+                padding: 12px;
             }
         }
     </style>
@@ -162,76 +260,94 @@
     <!-- Título simple -->
     <div class="title-container">
         <h1>ELLIEVERSO</h1>
-        <div class="scroll-arrow">
-            ↓
-        </div>
+        <div class="subtitle">Desplázate para explorar</div>
     </div>
     
     <!-- Contenedor de fotos -->
     <div class="photos-container" id="photosContainer">
-        <!-- Foto 1 - Tamaño mediano, posición izquierda -->
-        <div class="photo" style="left: 5%; top: 110vh; width: 280px; height: 280px;" data-animation="float">
-            <img src="img/1.png" alt="Ellie en el Ellieverso">
+        <!-- Foto 1 - Grande, izquierda -->
+        <div class="photo" style="left: 8%; top: 120vh; width: 380px; height: 380px;" data-animation="float">
+            <div class="photo-border"></div>
+            <img src="img/1.png" alt="Ellie en el Ellieverso" class="photo-img">
         </div>
         
-        <!-- Foto 2 - Tamaño pequeño, posición derecha -->
-        <div class="photo" style="left: 75%; top: 120vh; width: 220px; height: 220px;" data-animation="gentlePulse">
-            <img src="img/2.png" alt="Ellie explorando">
+        <!-- Foto 2 - Mediana, derecha -->
+        <div class="photo" style="left: 65%; top: 150vh; width: 320px; height: 320px;" data-animation="pulse">
+            <div class="photo-border"></div>
+            <img src="img/2.png" alt="Ellie explorando" class="photo-img">
         </div>
         
-        <!-- Foto 3 - Tamaño grande, posición izquierda -->
-        <div class="photo" style="left: 15%; top: 160vh; width: 320px; height: 320px;" data-animation="gentleShake">
-            <img src="img/IMG-20240705-WA0315-removebg-preview.png" alt="Ellie cósmica">
+        <!-- Foto 3 - Grande, izquierda -->
+        <div class="photo" style="left: 12%; top: 200vh; width: 400px; height: 400px;" data-animation="sway">
+            <div class="photo-border"></div>
+            <img src="img/IMG-20240705-WA0315-removebg-preview.png" alt="Ellie cósmica" class="photo-img">
         </div>
         
-        <!-- Foto 4 - Tamaño mediano, posición derecha -->
-        <div class="photo" style="left: 65%; top: 190vh; width: 260px; height: 260px;" data-animation="float">
-            <img src="img/4.png" alt="Ellie estelar">
+        <!-- Foto 4 - Mediana, derecha -->
+        <div class="photo" style="left: 60%; top: 250vh; width: 350px; height: 350px;" data-animation="float">
+            <div class="photo-border"></div>
+            <img src="img/4.png" alt="Ellie estelar" class="photo-img">
         </div>
         
-        <!-- Foto 5 - Tamaño pequeño, posición izquierda -->
-        <div class="photo" style="left: 10%; top: 230vh; width: 240px; height: 240px;" data-animation="gentleBounce">
-            <img src="img/5.png" alt="Ellie lunar">
+        <!-- Foto 5 - Grande, izquierda -->
+        <div class="photo" style="left: 5%; top: 320vh; width: 420px; height: 420px;" data-animation="bounce">
+            <div class="photo-border"></div>
+            <img src="img/5.png" alt="Ellie lunar" class="photo-img">
         </div>
         
-        <!-- Foto 6 - Tamaño mediano, posición derecha -->
-        <div class="photo" style="left: 80%; top: 260vh; width: 300px; height: 300px;" data-animation="gentleSpin">
-            <img src="img/6.png" alt="Ellie galáctica">
+        <!-- Foto 6 - Mediana, derecha -->
+        <div class="photo" style="left: 70%; top: 380vh; width: 360px; height: 360px;" data-animation="twist">
+            <div class="photo-border"></div>
+            <img src="img/6.png" alt="Ellie galáctica" class="photo-img">
         </div>
         
-        <!-- Foto 7 - Tamaño pequeño, posición izquierda -->
-        <div class="photo" style="left: 20%; top: 300vh; width: 200px; height: 200px;" data-animation="gentlePulse">
-            <img src="img/7.png" alt="Ellie espacial">
+        <!-- Foto 7 - Mediana, izquierda -->
+        <div class="photo" style="left: 15%; top: 450vh; width: 340px; height: 340px;" data-animation="pulse">
+            <div class="photo-border"></div>
+            <img src="img/7.png" alt="Ellie espacial" class="photo-img">
         </div>
         
-        <!-- Foto 8 - Tamaño grande, posición derecha -->
-        <div class="photo" style="left: 70%; top: 340vh; width: 340px; height: 340px;" data-animation="gentleShake">
-            <img src="img/8.png" alt="Ellie dimensional">
+        <!-- Foto 8 - Grande, derecha -->
+        <div class="photo" style="left: 55%; top: 500vh; width: 410px; height: 410px;" data-animation="sway">
+            <div class="photo-border"></div>
+            <img src="img/8.png" alt="Ellie dimensional" class="photo-img">
         </div>
         
-        <!-- Foto 9 - Tamaño mediano, posición izquierda -->
-        <div class="photo" style="left: 5%; top: 380vh; width: 280px; height: 280px;" data-animation="float">
-            <img src="img/9.png" alt="Ellie cósmica">
+        <!-- Foto 9 - Mediana, izquierda -->
+        <div class="photo" style="left: 10%; top: 580vh; width: 330px; height: 330px;" data-animation="float">
+            <div class="photo-border"></div>
+            <img src="img/9.png" alt="Ellie cósmica" class="photo-img">
         </div>
         
-        <!-- Foto 10 - Tamaño pequeño, posición derecha -->
-        <div class="photo" style="left: 85%; top: 420vh; width: 230px; height: 230px;" data-animation="gentleBounce">
-            <img src="img/10.png" alt="Ellie universal">
+        <!-- Foto 10 - Grande, derecha -->
+        <div class="photo" style="left: 65%; top: 630vh; width: 430px; height: 430px;" data-animation="bounce">
+            <div class="photo-border"></div>
+            <img src="img/10.png" alt="Ellie universal" class="photo-img">
         </div>
     </div>
+    
+    <!-- Flecha indicadora -->
+    <div class="scroll-arrow">
+        ↓
+    </div>
+    
+    <!-- Botón para volver arriba -->
+    <button class="back-to-top" id="backToTop">
+        ↑
+    </button>
 
     <script>
         // Crear estrellas de fondo
         function createStars() {
             const starsContainer = document.getElementById('stars');
-            const starCount = 200;
+            const starCount = 250;
             
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
                 
-                // Tamaño aleatorio pequeño
-                const size = Math.random() * 2 + 0.5;
+                // Tamaño aleatorio
+                const size = Math.random() * 3 + 0.5;
                 star.style.width = `${size}px`;
                 star.style.height = `${size}px`;
                 
@@ -240,11 +356,16 @@
                 star.style.top = `${Math.random() * 100}%`;
                 
                 // Opacidad aleatoria
-                star.style.opacity = Math.random() * 0.7 + 0.1;
+                star.style.opacity = Math.random() * 0.8 + 0.1;
                 
-                // Velocidad de movimiento lenta
-                const speed = Math.random() * 0.2 + 0.05;
+                // Velocidad de movimiento
+                const speed = Math.random() * 0.3 + 0.05;
                 star.dataset.speed = speed;
+                
+                // Algunas estrellas parpadean
+                if (Math.random() > 0.5) {
+                    star.style.animation = `starTwinkle ${Math.random() * 4 + 2}s infinite alternate`;
+                }
                 
                 starsContainer.appendChild(star);
             }
@@ -261,6 +382,7 @@
                     if (top < -5) {
                         top = 105;
                         star.style.left = `${Math.random() * 100}%`;
+                        star.style.opacity = Math.random() * 0.8 + 0.1;
                     }
                     
                     star.style.top = `${top}%`;
@@ -270,106 +392,209 @@
             }
             
             animateStars();
+            
+            // Añadir keyframes para el parpadeo
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes starTwinkle {
+                    0%, 100% { opacity: 0.2; }
+                    50% { opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
         }
         
-        // Aplicar animaciones suaves a las fotos
+        // Aplicar animaciones a las fotos
         function applyAnimations() {
             const photos = document.querySelectorAll('.photo');
             
             photos.forEach(photo => {
                 const presetAnimation = photo.getAttribute('data-animation');
-                let animation = presetAnimation;
                 
-                // Duración aleatoria entre 4 y 8 segundos (más lento)
+                // Duración aleatoria entre 4 y 8 segundos
                 const duration = Math.random() * 4 + 4;
                 
                 // Retraso aleatorio
                 const delay = Math.random() * 2;
                 
                 // Aplicar la animación
-                photo.style.animation = `${animation} ${duration}s ease-in-out infinite ${delay}s`;
+                photo.style.animation = `${presetAnimation} ${duration}s ease-in-out infinite ${delay}s`;
             });
         }
         
-        // Reposicionar fotos para pantallas pequeñas
-        function repositionForMobile() {
+        // Ajustar tamaño y posición para diferentes dispositivos
+        function adjustLayout() {
             const photos = document.querySelectorAll('.photo');
             const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
             
-            if (screenWidth < 900) {
-                photos.forEach((photo, index) => {
-                    // En móviles, hacer las fotos más pequeñas y centradas
-                    const currentWidth = parseInt(photo.style.width);
-                    const newWidth = Math.min(currentWidth, 180);
+            photos.forEach((photo, index) => {
+                const currentStyle = photo.style;
+                
+                if (screenWidth < 768) {
+                    // Móviles: fotos más grandes y centradas
+                    const size = Math.min(screenWidth * 0.7, 280);
+                    photo.style.width = `${size}px`;
+                    photo.style.height = `${size}px`;
                     
-                    // Posición más centrada
-                    const left = index % 2 === 0 ? '5%' : '55%';
-                    const top = 100 + (index * 25) + 'vh';
+                    // Posición alternada pero más centrada
+                    const left = index % 2 === 0 ? '5%' : '50%';
+                    photo.style.left = left;
                     
+                    // Espaciado vertical
+                    const topBase = 100 + (index * 22);
+                    photo.style.top = `${topBase}vh`;
+                    
+                } else if (screenWidth < 1200) {
+                    // Tablets: ajustar tamaños
+                    const currentWidth = parseInt(currentStyle.width);
+                    const newWidth = Math.min(currentWidth, screenWidth * 0.35);
                     photo.style.width = `${newWidth}px`;
                     photo.style.height = `${newWidth}px`;
-                    photo.style.left = left;
-                    photo.style.top = top;
-                });
+                    
+                    // Ajustar posiciones
+                    const currentLeft = parseInt(currentStyle.left);
+                    if (currentLeft > 50) {
+                        photo.style.left = `${65 - (index % 2) * 10}%`;
+                    } else {
+                        photo.style.left = `${10 + (index % 2) * 5}%`;
+                    }
+                }
+                // En escritorio mantener los estilos originales
+            });
+            
+            // Ajustar altura del contenedor según dispositivos
+            const container = document.getElementById('photosContainer');
+            if (screenWidth < 768) {
+                container.style.minHeight = `${100 + (photos.length * 22)}vh`;
+            } else if (screenWidth < 1200) {
+                container.style.minHeight = '2800px';
+            } else {
+                container.style.minHeight = '3500px';
             }
         }
         
-        // Ocultar flecha cuando se haga scroll
-        function hideArrowOnScroll() {
+        // Ocultar/mostrar flecha y botón de volver arriba
+        function setupScrollControls() {
             const arrow = document.querySelector('.scroll-arrow');
+            const backToTopBtn = document.getElementById('backToTop');
             
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 100) {
+                const scrollY = window.scrollY;
+                
+                // Ocultar flecha cuando se baja
+                if (scrollY > 300) {
                     arrow.style.opacity = '0';
-                    arrow.style.transition = 'opacity 0.5s';
+                    arrow.style.pointerEvents = 'none';
+                    backToTopBtn.style.display = 'block';
                 } else {
                     arrow.style.opacity = '0.6';
+                    arrow.style.pointerEvents = 'auto';
+                    backToTopBtn.style.display = 'none';
                 }
+                
+                // Efecto parallax en las fotos
+                const photos = document.querySelectorAll('.photo');
+                photos.forEach(photo => {
+                    const speed = 0.3;
+                    const yPos = -(scrollY * speed);
+                    photo.style.transform = `translateY(${yPos}px)`;
+                });
+            });
+            
+            // Botón para volver arriba
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
         }
         
         // Efecto al hacer clic en una foto
         function setupPhotoClick() {
             document.querySelectorAll('.photo').forEach(photo => {
-                photo.addEventListener('click', function() {
-                    // Ampliar la foto suavemente
-                    this.style.transform = 'scale(1.8)';
-                    this.style.zIndex = '100';
-                    this.style.transition = 'transform 0.5s ease, z-index 0.5s';
+                photo.addEventListener('click', function(e) {
+                    // Evitar que se active si se hace clic en el borde
+                    if (e.target.classList.contains('photo-border')) return;
                     
-                    // Volver al tamaño normal después de 2 segundos
-                    setTimeout(() => {
-                        this.style.transform = '';
-                        this.style.zIndex = '2';
-                    }, 2000);
+                    // Ampliar la foto
+                    const originalTransform = this.style.transform;
+                    const originalZIndex = this.style.zIndex;
+                    const originalAnimation = this.style.animation;
+                    
+                    this.style.transform = originalTransform + ' scale(2)';
+                    this.style.zIndex = '100';
+                    this.style.animation = 'none';
+                    
+                    // Crear overlay para cerrar
+                    const overlay = document.createElement('div');
+                    overlay.style.position = 'fixed';
+                    overlay.style.top = '0';
+                    overlay.style.left = '0';
+                    overlay.style.width = '100%';
+                    overlay.style.height = '100%';
+                    overlay.style.background = 'rgba(0,0,0,0.8)';
+                    overlay.style.zIndex = '99';
+                    overlay.style.cursor = 'pointer';
+                    
+                    overlay.addEventListener('click', function() {
+                        photo.style.transform = originalTransform;
+                        photo.style.zIndex = originalZIndex;
+                        photo.style.animation = originalAnimation;
+                        document.body.removeChild(this);
+                    });
+                    
+                    document.body.appendChild(overlay);
                 });
             });
         }
         
-        // Cargar imágenes con fallback por si alguna no carga
+        // Precargar imágenes y manejar errores
         function preloadImages() {
-            const images = document.querySelectorAll('.photo img');
+            const images = document.querySelectorAll('.photo-img');
+            
             images.forEach(img => {
-                // Si la imagen falla al cargar, mostrar un mensaje en consola
+                // Precargar
+                const tempImg = new Image();
+                tempImg.src = img.src;
+                
+                // Manejar error de carga
                 img.onerror = function() {
-                    console.log(`No se pudo cargar la imagen: ${this.src}`);
-                    this.style.display = 'none';
-                    this.parentElement.innerHTML = '<div style="color: white; text-align: center; padding: 20px;">Imagen no disponible</div>';
+                    console.warn(`No se pudo cargar: ${this.src}`);
+                    this.style.opacity = '0.5';
+                    this.parentElement.style.opacity = '0.7';
+                    
+                    // Mostrar mensaje de error sutil
+                    const errorMsg = document.createElement('div');
+                    errorMsg.textContent = '😿';
+                    errorMsg.style.position = 'absolute';
+                    errorMsg.style.fontSize = '3rem';
+                    errorMsg.style.opacity = '0.5';
+                    this.parentElement.appendChild(errorMsg);
+                };
+                
+                // Mostrar cuando se carga
+                img.onload = function() {
+                    this.style.opacity = '1';
                 };
             });
         }
         
-        // Inicializar
+        // Inicializar todo
         document.addEventListener('DOMContentLoaded', () => {
             createStars();
             applyAnimations();
-            repositionForMobile();
-            hideArrowOnScroll();
+            adjustLayout();
+            setupScrollControls();
             setupPhotoClick();
             preloadImages();
             
-            // Reposicionar cuando cambie el tamaño de la ventana
-            window.addEventListener('resize', repositionForMobile);
+            // Reajustar cuando cambie el tamaño de la ventana
+            window.addEventListener('resize', adjustLayout);
+            
+            // Reajustar también cuando se cargue completamente
+            window.addEventListener('load', adjustLayout);
         });
     </script>
 </body>
