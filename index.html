@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELLIEVERSO</title>
+    <title>ELLIEVERSO LOCO</title>
     <style>
         * {
             margin: 0;
@@ -12,590 +12,480 @@
         }
         
         body {
-            background: #0a0a1a;
-            color: white;
-            font-family: 'Arial', sans-serif;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-        
-        /* Fondo estelar */
-        #stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        
-        .star {
-            position: absolute;
-            background-color: white;
-            border-radius: 50%;
-        }
-        
-        /* Título simple */
-        .title-container {
+            background: black;
+            overflow: hidden;
+            width: 100vw;
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        h1 {
-            font-size: 8rem;
-            font-weight: 900;
-            color: white;
-            letter-spacing: 15px;
-            text-transform: uppercase;
-            line-height: 1;
-            margin-bottom: 30px;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            color: #aaa;
-            letter-spacing: 3px;
-            opacity: 0.8;
-        }
-        
-        /* Contenedor de fotos */
-        .photos-container {
-            position: relative;
-            min-height: 3500px;
-            padding-bottom: 200px;
-        }
-        
-        /* Estilos para cada foto - Borde de la forma natural */
-        .photo {
-            position: absolute;
-            transition: transform 0.5s ease, filter 0.3s;
-            cursor: pointer;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .photo:hover {
-            transform: scale(1.1);
-            z-index: 20;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-        }
-        
-        .photo-img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
-        }
-        
-        /* Contenedor para el borde que sigue la forma */
-        .photo-border {
-            position: absolute;
-            top: -8px;
-            left: -8px;
-            right: -8px;
-            bottom: -8px;
-            background: linear-gradient(45deg, #ff6b9d, #ffd166, #06d6a0, #118ab2, #ef476f);
-            border-radius: 20px;
-            z-index: -1;
-            opacity: 0.7;
-            animation: borderGlow 4s infinite alternate;
-        }
-        
-        @keyframes borderGlow {
-            0% {
-                opacity: 0.5;
-                filter: blur(5px);
-            }
-            100% {
-                opacity: 0.8;
-                filter: blur(8px);
-            }
-        }
-        
-        /* Flecha indicadora */
-        .scroll-arrow {
             position: fixed;
-            bottom: 30px;
+        }
+        
+        /* Título loco */
+        #title {
+            position: absolute;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, -50%);
+            font-family: 'Arial Black', sans-serif;
+            font-size: 15vw;
             color: white;
-            font-size: 2.5rem;
-            animation: arrowBounce 2s infinite;
-            opacity: 0.6;
-            z-index: 100;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 10px 20px;
-            border-radius: 50px;
-            backdrop-filter: blur(5px);
+            text-align: center;
+            z-index: 1000;
+            animation: titleCrazy 3s infinite alternate;
+            pointer-events: none;
+            text-shadow: 0 0 50px white;
+            mix-blend-mode: difference;
         }
         
-        @keyframes arrowBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(10px); }
-        }
-        
-        /* Animaciones */
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-20px) rotate(3deg); }
-            75% { transform: translateY(10px) rotate(-3deg); }
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-25px); }
-        }
-        
-        @keyframes sway {
-            0%, 100% { transform: translateX(0) rotate(0deg); }
-            25% { transform: translateX(-15px) rotate(2deg); }
-            75% { transform: translateX(15px) rotate(-2deg); }
-        }
-        
-        @keyframes twist {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(5deg); }
-        }
-        
-        /* Botón para volver arriba */
-        .back-to-top {
-            position: fixed;
-            bottom: 100px;
-            right: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 100;
-            display: none;
-            backdrop-filter: blur(5px);
-            transition: all 0.3s;
-        }
-        
-        .back-to-top:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
-        }
-        
-        /* Responsive */
-        @media (max-width: 1200px) {
-            h1 {
-                font-size: 6rem;
-                letter-spacing: 12px;
-            }
-            
-            .photos-container {
-                min-height: 3000px;
-            }
-        }
-        
-        @media (max-width: 900px) {
-            h1 {
-                font-size: 4rem;
-                letter-spacing: 8px;
-            }
-            
-            .subtitle {
-                font-size: 1rem;
-                letter-spacing: 2px;
-            }
-            
-            .photos-container {
-                min-height: 2500px;
-            }
-            
-            .scroll-arrow {
-                font-size: 2rem;
-                padding: 8px 16px;
-            }
-        }
-        
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 3rem;
+        @keyframes titleCrazy {
+            0% { 
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                filter: hue-rotate(0deg) blur(0px);
                 letter-spacing: 5px;
             }
-            
-            .subtitle {
-                font-size: 0.9rem;
-                letter-spacing: 1px;
+            100% { 
+                transform: translate(-50%, -50%) scale(1.5) rotate(10deg);
+                filter: hue-rotate(360deg) blur(3px);
+                letter-spacing: 20px;
             }
-            
-            .photos-container {
-                min-height: 2200px;
-            }
-            
-            .scroll-arrow {
-                font-size: 1.8rem;
-                padding: 6px 12px;
-                bottom: 20px;
-            }
-            
-            .back-to-top {
-                bottom: 80px;
-                right: 20px;
-                padding: 12px;
-            }
+        }
+        
+        /* Contenedor de fotos locas */
+        .photo {
+            position: absolute;
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.1s linear;
+            max-width: 40vw;
+            max-height: 40vh;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            will-change: transform, opacity, filter;
+        }
+        
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+        }
+        
+        /* Clases para efectos locos */
+        .crazy-spin {
+            animation: crazySpin 0.5s linear infinite !important;
+        }
+        
+        @keyframes crazySpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.5); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        
+        .crazy-bounce {
+            animation: crazyBounce 0.7s ease-in-out infinite alternate !important;
+        }
+        
+        @keyframes crazyBounce {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-100px) scale(1.3); }
+        }
+        
+        .crazy-shake {
+            animation: crazyShake 0.2s linear infinite !important;
+        }
+        
+        @keyframes crazyShake {
+            0%, 100% { transform: translateX(0px) rotate(0deg); }
+            25% { transform: translateX(-50px) rotate(-10deg); }
+            75% { transform: translateX(50px) rotate(10deg); }
+        }
+        
+        .crazy-pulse {
+            animation: crazyPulse 0.4s ease-in-out infinite alternate !important;
+        }
+        
+        @keyframes crazyPulse {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2); opacity: 0.7; }
+        }
+        
+        .crazy-explode {
+            animation: crazyExplode 1s forwards !important;
+        }
+        
+        @keyframes crazyExplode {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(3); opacity: 0.5; filter: blur(10px); }
+            100% { transform: scale(0); opacity: 0; filter: blur(20px); }
+        }
+        
+        .crazy-appear {
+            animation: crazyAppear 0.5s forwards !important;
+        }
+        
+        @keyframes crazyAppear {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        
+        .crazy-warp {
+            animation: crazyWarp 2s linear infinite !important;
+        }
+        
+        @keyframes crazyWarp {
+            0% { transform: perspective(500px) rotateX(0deg) rotateY(0deg); }
+            25% { transform: perspective(500px) rotateX(90deg) rotateY(90deg); }
+            50% { transform: perspective(500px) rotateX(180deg) rotateY(180deg); }
+            75% { transform: perspective(500px) rotateX(270deg) rotateY(270deg); }
+            100% { transform: perspective(500px) rotateX(360deg) rotateY(360deg); }
+        }
+        
+        .crazy-trail {
+            animation: crazyTrail 0.5s linear infinite !important;
+        }
+        
+        @keyframes crazyTrail {
+            0% { filter: drop-shadow(0 0 0px white) hue-rotate(0deg); }
+            100% { filter: drop-shadow(0 0 50px white) hue-rotate(360deg); }
+        }
+        
+        /* Efectos de partículas */
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 50;
         }
     </style>
 </head>
 <body>
-    <!-- Fondo de estrellas -->
-    <div id="stars"></div>
+    <!-- Título loco -->
+    <div id="title">ELLIEVERSO</div>
     
-    <!-- Título simple -->
-    <div class="title-container">
-        <h1>ELLIEVERSO</h1>
-        <div class="subtitle">Desplázate para explorar</div>
-    </div>
+    <!-- Las fotos se crearán con JavaScript -->
     
-    <!-- Contenedor de fotos -->
-    <div class="photos-container" id="photosContainer">
-        <!-- Foto 1 - Grande, izquierda -->
-        <div class="photo" style="left: 8%; top: 120vh; width: 380px; height: 380px;" data-animation="float">
-            <div class="photo-border"></div>
-            <img src="img/1.png" alt="Ellie en el Ellieverso" class="photo-img">
-        </div>
-        
-        <!-- Foto 2 - Mediana, derecha -->
-        <div class="photo" style="left: 65%; top: 150vh; width: 320px; height: 320px;" data-animation="pulse">
-            <div class="photo-border"></div>
-            <img src="img/2.png" alt="Ellie explorando" class="photo-img">
-        </div>
-        
-        <!-- Foto 3 - Grande, izquierda -->
-        <div class="photo" style="left: 12%; top: 200vh; width: 400px; height: 400px;" data-animation="sway">
-            <div class="photo-border"></div>
-            <img src="img/IMG-20240705-WA0315-removebg-preview.png" alt="Ellie cósmica" class="photo-img">
-        </div>
-        
-        <!-- Foto 4 - Mediana, derecha -->
-        <div class="photo" style="left: 60%; top: 250vh; width: 350px; height: 350px;" data-animation="float">
-            <div class="photo-border"></div>
-            <img src="img/4.png" alt="Ellie estelar" class="photo-img">
-        </div>
-        
-        <!-- Foto 5 - Grande, izquierda -->
-        <div class="photo" style="left: 5%; top: 320vh; width: 420px; height: 420px;" data-animation="bounce">
-            <div class="photo-border"></div>
-            <img src="img/5.png" alt="Ellie lunar" class="photo-img">
-        </div>
-        
-        <!-- Foto 6 - Mediana, derecha -->
-        <div class="photo" style="left: 70%; top: 380vh; width: 360px; height: 360px;" data-animation="twist">
-            <div class="photo-border"></div>
-            <img src="img/6.png" alt="Ellie galáctica" class="photo-img">
-        </div>
-        
-        <!-- Foto 7 - Mediana, izquierda -->
-        <div class="photo" style="left: 15%; top: 450vh; width: 340px; height: 340px;" data-animation="pulse">
-            <div class="photo-border"></div>
-            <img src="img/7.png" alt="Ellie espacial" class="photo-img">
-        </div>
-        
-        <!-- Foto 8 - Grande, derecha -->
-        <div class="photo" style="left: 55%; top: 500vh; width: 410px; height: 410px;" data-animation="sway">
-            <div class="photo-border"></div>
-            <img src="img/8.png" alt="Ellie dimensional" class="photo-img">
-        </div>
-        
-        <!-- Foto 9 - Mediana, izquierda -->
-        <div class="photo" style="left: 10%; top: 580vh; width: 330px; height: 330px;" data-animation="float">
-            <div class="photo-border"></div>
-            <img src="img/9.png" alt="Ellie cósmica" class="photo-img">
-        </div>
-        
-        <!-- Foto 10 - Grande, derecha -->
-        <div class="photo" style="left: 65%; top: 630vh; width: 430px; height: 430px;" data-animation="bounce">
-            <div class="photo-border"></div>
-            <img src="img/10.png" alt="Ellie universal" class="photo-img">
-        </div>
-    </div>
-    
-    <!-- Flecha indicadora -->
-    <div class="scroll-arrow">
-        ↓
-    </div>
-    
-    <!-- Botón para volver arriba -->
-    <button class="back-to-top" id="backToTop">
-        ↑
-    </button>
-
     <script>
-        // Crear estrellas de fondo
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const starCount = 250;
+        // Configuración
+        const TOTAL_PHOTOS = 15; // Más fotos para más locura
+        const MIN_SIZE = 200; // Tamaño mínimo en píxeles
+        const MAX_SIZE = 500; // Tamaño máximo en píxeles
+        const EFFECTS = [
+            'crazy-spin', 'crazy-bounce', 'crazy-shake', 
+            'crazy-pulse', 'crazy-warp', 'crazy-trail'
+        ];
+        
+        let photos = [];
+        let crazyMode = true;
+        
+        // Lista de imágenes de Ellie (reemplaza con tus imágenes)
+        const ellieImages = [
+            'img/1.png',
+            'img/2.png',
+            'img/IMG-20240705-WA0315-removebg-preview.png',
+            'img/4.png',
+            'img/5.png',
+            'img/6.png',
+            'img/7.png',
+            'img/8.png',
+            'img/9.png',
+            'img/10.png'
+        ];
+        
+        // Crear fotos locas
+        function createCrazyPhotos() {
+            const container = document.body;
             
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
+            for (let i = 0; i < TOTAL_PHOTOS; i++) {
+                // Seleccionar imagen aleatoria (repite si es necesario)
+                const imgSrc = ellieImages[i % ellieImages.length];
+                
+                // Crear elemento de foto
+                const photo = document.createElement('div');
+                photo.className = 'photo';
+                photo.dataset.id = i;
+                
+                // Crear imagen
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.alt = `Ellie loca ${i + 1}`;
+                img.onerror = function() {
+                    // Si la imagen falla, crear una placeholder
+                    this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect width="100%" height="100%" fill="white"/><text x="50%" y="50%" font-family="Arial" font-size="20" fill="black" text-anchor="middle" dy=".3em">ELLIE</text></svg>';
+                };
+                
+                photo.appendChild(img);
+                container.appendChild(photo);
+                
+                // Configurar posición y tamaño inicial
+                setupPhoto(photo, i);
+                
+                // Agregar a la lista
+                photos.push({
+                    element: photo,
+                    x: parseFloat(photo.style.left),
+                    y: parseFloat(photo.style.top),
+                    size: parseFloat(photo.style.width),
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: (Math.random() - 0.5) * 10,
+                    rotation: 0,
+                    vr: (Math.random() - 0.5) * 10
+                });
+            }
+        }
+        
+        // Configurar foto inicial
+        function setupPhoto(photo, index) {
+            const size = MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE);
+            
+            // Posición aleatoria pero distribuida
+            const cols = 4;
+            const rows = Math.ceil(TOTAL_PHOTOS / cols);
+            const col = index % cols;
+            const row = Math.floor(index / cols);
+            
+            const x = (col * (100 / cols)) + (Math.random() * 20 - 10);
+            const y = (row * (100 / rows)) + (Math.random() * 20 - 10);
+            
+            photo.style.width = `${size}px`;
+            photo.style.height = `${size}px`;
+            photo.style.left = `${x}%`;
+            photo.style.top = `${y}%`;
+            
+            // Rotación inicial aleatoria
+            photo.style.transform = `rotate(${Math.random() * 360}deg)`;
+            
+            // Aplicar efecto aleatorio
+            applyRandomEffect(photo);
+            
+            // Evento de clic para efectos especiales
+            photo.addEventListener('click', function(e) {
+                triggerSpecialEffect(this);
+                e.stopPropagation();
+            });
+        }
+        
+        // Aplicar efecto aleatorio
+        function applyRandomEffect(photo) {
+            // Remover efectos anteriores
+            EFFECTS.forEach(effect => photo.classList.remove(effect));
+            
+            // Aplicar nuevo efecto aleatorio
+            const randomEffect = EFFECTS[Math.floor(Math.random() * EFFECTS.length)];
+            photo.classList.add(randomEffect);
+            
+            // Cambiar efecto periódicamente
+            setTimeout(() => {
+                if (crazyMode) applyRandomEffect(photo);
+            }, 2000 + Math.random() * 3000);
+        }
+        
+        // Efecto especial al hacer clic
+        function triggerSpecialEffect(photo) {
+            // Efecto de explosión
+            photo.classList.add('crazy-explode');
+            
+            // Crear partículas
+            createParticles(photo);
+            
+            // Reaparecer después
+            setTimeout(() => {
+                if (!crazyMode) return;
+                
+                photo.classList.remove('crazy-explode');
+                photo.classList.add('crazy-appear');
+                
+                // Nueva posición aleatoria
+                photo.style.left = `${Math.random() * 80 + 10}%`;
+                photo.style.top = `${Math.random() * 80 + 10}%`;
+                
+                // Nuevo tamaño
+                const newSize = MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE);
+                photo.style.width = `${newSize}px`;
+                photo.style.height = `${newSize}px`;
+                
+                // Aplicar efecto aleatorio nuevo
+                setTimeout(() => {
+                    photo.classList.remove('crazy-appear');
+                    applyRandomEffect(photo);
+                }, 500);
+            }, 1000);
+        }
+        
+        // Crear partículas para efectos
+        function createParticles(sourceElement) {
+            const rect = sourceElement.getBoundingClientRect();
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
                 
                 // Tamaño aleatorio
-                const size = Math.random() * 3 + 0.5;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
+                const size = Math.random() * 10 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
                 
-                // Posición aleatoria
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
+                // Posición inicial (centro de la foto)
+                particle.style.left = `${rect.left + rect.width / 2}px`;
+                particle.style.top = `${rect.top + rect.height / 2}px`;
                 
-                // Opacidad aleatoria
-                star.style.opacity = Math.random() * 0.8 + 0.1;
+                // Velocidad aleatoria
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 5 + 2;
+                const vx = Math.cos(angle) * speed;
+                const vy = Math.sin(angle) * speed;
                 
-                // Velocidad de movimiento
-                const speed = Math.random() * 0.3 + 0.05;
-                star.dataset.speed = speed;
+                document.body.appendChild(particle);
                 
-                // Algunas estrellas parpadean
-                if (Math.random() > 0.5) {
-                    star.style.animation = `starTwinkle ${Math.random() * 4 + 2}s infinite alternate`;
-                }
-                
-                starsContainer.appendChild(star);
-            }
-            
-            // Animar estrellas
-            function animateStars() {
-                const stars = document.querySelectorAll('.star');
-                
-                stars.forEach(star => {
-                    let top = parseFloat(star.style.top);
-                    top -= parseFloat(star.dataset.speed);
-                    
-                    // Si la estrella sale de la pantalla, reiniciarla abajo
-                    if (top < -5) {
-                        top = 105;
-                        star.style.left = `${Math.random() * 100}%`;
-                        star.style.opacity = Math.random() * 0.8 + 0.1;
-                    }
-                    
-                    star.style.top = `${top}%`;
-                });
-                
-                requestAnimationFrame(animateStars);
-            }
-            
-            animateStars();
-            
-            // Añadir keyframes para el parpadeo
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes starTwinkle {
-                    0%, 100% { opacity: 0.2; }
-                    50% { opacity: 1; }
-                }
-            `;
-            document.head.appendChild(style);
-        }
-        
-        // Aplicar animaciones a las fotos
-        function applyAnimations() {
-            const photos = document.querySelectorAll('.photo');
-            
-            photos.forEach(photo => {
-                const presetAnimation = photo.getAttribute('data-animation');
-                
-                // Duración aleatoria entre 4 y 8 segundos
-                const duration = Math.random() * 4 + 4;
-                
-                // Retraso aleatorio
-                const delay = Math.random() * 2;
-                
-                // Aplicar la animación
-                photo.style.animation = `${presetAnimation} ${duration}s ease-in-out infinite ${delay}s`;
-            });
-        }
-        
-        // Ajustar tamaño y posición para diferentes dispositivos
-        function adjustLayout() {
-            const photos = document.querySelectorAll('.photo');
-            const screenWidth = window.innerWidth;
-            const screenHeight = window.innerHeight;
-            
-            photos.forEach((photo, index) => {
-                const currentStyle = photo.style;
-                
-                if (screenWidth < 768) {
-                    // Móviles: fotos más grandes y centradas
-                    const size = Math.min(screenWidth * 0.7, 280);
-                    photo.style.width = `${size}px`;
-                    photo.style.height = `${size}px`;
-                    
-                    // Posición alternada pero más centrada
-                    const left = index % 2 === 0 ? '5%' : '50%';
-                    photo.style.left = left;
-                    
-                    // Espaciado vertical
-                    const topBase = 100 + (index * 22);
-                    photo.style.top = `${topBase}vh`;
-                    
-                } else if (screenWidth < 1200) {
-                    // Tablets: ajustar tamaños
-                    const currentWidth = parseInt(currentStyle.width);
-                    const newWidth = Math.min(currentWidth, screenWidth * 0.35);
-                    photo.style.width = `${newWidth}px`;
-                    photo.style.height = `${newWidth}px`;
-                    
-                    // Ajustar posiciones
-                    const currentLeft = parseInt(currentStyle.left);
-                    if (currentLeft > 50) {
-                        photo.style.left = `${65 - (index % 2) * 10}%`;
-                    } else {
-                        photo.style.left = `${10 + (index % 2) * 5}%`;
-                    }
-                }
-                // En escritorio mantener los estilos originales
-            });
-            
-            // Ajustar altura del contenedor según dispositivos
-            const container = document.getElementById('photosContainer');
-            if (screenWidth < 768) {
-                container.style.minHeight = `${100 + (photos.length * 22)}vh`;
-            } else if (screenWidth < 1200) {
-                container.style.minHeight = '2800px';
-            } else {
-                container.style.minHeight = '3500px';
+                // Animar partícula
+                animateParticle(particle, vx, vy);
             }
         }
         
-        // Ocultar/mostrar flecha y botón de volver arriba
-        function setupScrollControls() {
-            const arrow = document.querySelector('.scroll-arrow');
-            const backToTopBtn = document.getElementById('backToTop');
+        // Animar partícula
+        function animateParticle(particle, vx, vy) {
+            let x = parseFloat(particle.style.left);
+            let y = parseFloat(particle.style.top);
+            let opacity = 1;
             
-            window.addEventListener('scroll', () => {
-                const scrollY = window.scrollY;
+            function update() {
+                x += vx;
+                y += vy;
+                opacity -= 0.02;
                 
-                // Ocultar flecha cuando se baja
-                if (scrollY > 300) {
-                    arrow.style.opacity = '0';
-                    arrow.style.pointerEvents = 'none';
-                    backToTopBtn.style.display = 'block';
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.opacity = opacity;
+                
+                if (opacity > 0) {
+                    requestAnimationFrame(update);
                 } else {
-                    arrow.style.opacity = '0.6';
-                    arrow.style.pointerEvents = 'auto';
-                    backToTopBtn.style.display = 'none';
+                    particle.remove();
+                }
+            }
+            
+            update();
+        }
+        
+        // Movimiento físico caótico
+        function updatePhysics() {
+            if (!crazyMode) return;
+            
+            photos.forEach(photoObj => {
+                const photo = photoObj.element;
+                
+                // Actualizar posición
+                photoObj.x += photoObj.vx;
+                photoObj.y += photoObj.vy;
+                photoObj.rotation += photoObj.vr;
+                
+                // Rebotes en los bordes
+                const rect = photo.getBoundingClientRect();
+                
+                if (photoObj.x < 0 || photoObj.x > window.innerWidth - rect.width) {
+                    photoObj.vx *= -1;
+                    photoObj.x = Math.max(0, Math.min(photoObj.x, window.innerWidth - rect.width));
                 }
                 
-                // Efecto parallax en las fotos
-                const photos = document.querySelectorAll('.photo');
-                photos.forEach(photo => {
-                    const speed = 0.3;
-                    const yPos = -(scrollY * speed);
-                    photo.style.transform = `translateY(${yPos}px)`;
-                });
-            });
-            
-            // Botón para volver arriba
-            backToTopBtn.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-        }
-        
-        // Efecto al hacer clic en una foto
-        function setupPhotoClick() {
-            document.querySelectorAll('.photo').forEach(photo => {
-                photo.addEventListener('click', function(e) {
-                    // Evitar que se active si se hace clic en el borde
-                    if (e.target.classList.contains('photo-border')) return;
-                    
-                    // Ampliar la foto
-                    const originalTransform = this.style.transform;
-                    const originalZIndex = this.style.zIndex;
-                    const originalAnimation = this.style.animation;
-                    
-                    this.style.transform = originalTransform + ' scale(2)';
-                    this.style.zIndex = '100';
-                    this.style.animation = 'none';
-                    
-                    // Crear overlay para cerrar
-                    const overlay = document.createElement('div');
-                    overlay.style.position = 'fixed';
-                    overlay.style.top = '0';
-                    overlay.style.left = '0';
-                    overlay.style.width = '100%';
-                    overlay.style.height = '100%';
-                    overlay.style.background = 'rgba(0,0,0,0.8)';
-                    overlay.style.zIndex = '99';
-                    overlay.style.cursor = 'pointer';
-                    
-                    overlay.addEventListener('click', function() {
-                        photo.style.transform = originalTransform;
-                        photo.style.zIndex = originalZIndex;
-                        photo.style.animation = originalAnimation;
-                        document.body.removeChild(this);
-                    });
-                    
-                    document.body.appendChild(overlay);
-                });
-            });
-        }
-        
-        // Precargar imágenes y manejar errores
-        function preloadImages() {
-            const images = document.querySelectorAll('.photo-img');
-            
-            images.forEach(img => {
-                // Precargar
-                const tempImg = new Image();
-                tempImg.src = img.src;
+                if (photoObj.y < 0 || photoObj.y > window.innerHeight - rect.height) {
+                    photoObj.vy *= -1;
+                    photoObj.y = Math.max(0, Math.min(photoObj.y, window.innerHeight - rect.height));
+                }
                 
-                // Manejar error de carga
-                img.onerror = function() {
-                    console.warn(`No se pudo cargar: ${this.src}`);
-                    this.style.opacity = '0.5';
-                    this.parentElement.style.opacity = '0.7';
-                    
-                    // Mostrar mensaje de error sutil
-                    const errorMsg = document.createElement('div');
-                    errorMsg.textContent = '😿';
-                    errorMsg.style.position = 'absolute';
-                    errorMsg.style.fontSize = '3rem';
-                    errorMsg.style.opacity = '0.5';
-                    this.parentElement.appendChild(errorMsg);
-                };
+                // Aplicar transformación
+                photo.style.left = `${photoObj.x}px`;
+                photo.style.top = `${photoObj.y}px`;
                 
-                // Mostrar cuando se carga
-                img.onload = function() {
-                    this.style.opacity = '1';
-                };
+                // Solo rotar si no tiene efecto de spin
+                if (!photo.classList.contains('crazy-spin') && !photo.classList.contains('crazy-warp')) {
+                    photo.style.transform = `rotate(${photoObj.rotation}deg)`;
+                }
+                
+                // Cambios aleatorios de dirección
+                if (Math.random() < 0.01) {
+                    photoObj.vx = (Math.random() - 0.5) * 15;
+                    photoObj.vy = (Math.random() - 0.5) * 15;
+                    photoObj.vr = (Math.random() - 0.5) * 15;
+                }
+                
+                // Cambio aleatorio de tamaño
+                if (Math.random() < 0.005) {
+                    const newSize = MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE);
+                    photo.style.width = `${newSize}px`;
+                    photo.style.height = `${newSize}px`;
+                    photoObj.size = newSize;
+                }
             });
+            
+            requestAnimationFrame(updatePhysics);
         }
         
-        // Inicializar todo
-        document.addEventListener('DOMContentLoaded', () => {
-            createStars();
-            applyAnimations();
-            adjustLayout();
-            setupScrollControls();
-            setupPhotoClick();
-            preloadImages();
+        // Evento de clic en el cuerpo para efecto masivo
+        document.body.addEventListener('click', function(e) {
+            if (e.target.classList.contains('photo')) return;
             
-            // Reajustar cuando cambie el tamaño de la ventana
-            window.addEventListener('resize', adjustLayout);
+            // Efecto en todas las fotos
+            photos.forEach(photoObj => {
+                if (Math.random() > 0.3) {
+                    triggerSpecialEffect(photoObj.element);
+                }
+            });
             
-            // Reajustar también cuando se cargue completamente
-            window.addEventListener('load', adjustLayout);
+            // Cambiar título
+            const title = document.getElementById('title');
+            title.style.animation = 'none';
+            setTimeout(() => {
+                title.style.animation = 'titleCrazy 1s infinite alternate';
+            }, 10);
         });
+        
+        // Efecto de título intermitente
+        function crazyTitle() {
+            if (!crazyMode) return;
+            
+            const title = document.getElementById('title');
+            
+            // Cambios locos aleatorios
+            if (Math.random() < 0.1) {
+                title.style.fontSize = `${10 + Math.random() * 20}vw`;
+                title.style.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                title.style.textShadow = `0 0 ${30 + Math.random() * 70}px white`;
+            }
+            
+            setTimeout(crazyTitle, 100);
+        }
+        
+        // Inicializar
+        function init() {
+            createCrazyPhotos();
+            updatePhysics();
+            crazyTitle();
+            
+            // Ocultar título después de 5 segundos
+            setTimeout(() => {
+                const title = document.getElementById('title');
+                title.style.opacity = '0.2';
+                title.style.transition = 'opacity 2s';
+            }, 5000);
+        }
+        
+        // Cargar imágenes primero
+        window.addEventListener('load', init);
+        
+        // Redimensionar
+        window.addEventListener('resize', function() {
+            // Reposicionar fotos al redimensionar
+            photos.forEach((photoObj, index) => {
+                const photo = photoObj.element;
+                photoObj.x = Math.random() * (window.innerWidth - photoObj.size);
+                photoObj.y = Math.random() * (window.innerHeight - photoObj.size);
+            });
+        });
+        
+        // Instrucción de consola
+        console.log('🎉 ¡BIENVENIDO AL ELLIEVERSO LOCO! 🎉');
+        console.log('Haz clic en las fotos de Ellie para hacerlas explotar');
+        console.log('Haz clic en cualquier otro lado para caos total');
+        console.log('Disfruta del viaje psicodélico felino 🐱💥');
     </script>
 </body>
 </html>
