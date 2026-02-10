@@ -108,9 +108,10 @@
                 'img/9.png', 'img/10.png', 'img/11.png', 'img/12.png',
                 'img/13.png', 'img/14.png'
             ],
-            minSize: 80,
-            maxSize: 280,
-            starCount: 200
+            copiesPerImage: 5,  // Cuántas copias de cada imagen
+            minSize: 60,
+            maxSize: 200,
+            starCount: 300
         };
         
         const ellies = [];
@@ -307,26 +308,26 @@
                 opacity: 1,
                 
                 // Para movimientos
-                speedX: (Math.random() - 0.5) * 3,
-                speedY: (Math.random() - 0.5) * 3,
+                speedX: (Math.random() - 0.5) * 4,
+                speedY: (Math.random() - 0.5) * 4,
                 seed: Math.random() * Math.PI * 2,
                 centerX: Math.random() * window.innerWidth,
                 centerY: Math.random() * window.innerHeight,
                 baseY: Math.random() * window.innerHeight,
-                radius: Math.random() * 150 + 100,
+                radius: Math.random() * 200 + 80,
                 orbitAngle: Math.random() * Math.PI * 2,
                 
                 // Control de movimiento
                 currentMovement: movementNames[Math.floor(Math.random() * movementNames.length)],
-                nextChangeTime: Date.now() + Math.random() * 8000 + 5000,
+                nextChangeTime: Date.now() + Math.random() * 6000 + 4000,
                 
                 // Para teletransporte
                 lastTeleport: 0,
                 teleportInterval: 3000,
                 
-                // Control de visibilidad
-                visible: true,
-                nextVisibilityChange: Date.now() + Math.random() * 10000 + 8000,
+                // Control de visibilidad (más probabilidad de estar visible)
+                visible: Math.random() > 0.2,
+                nextVisibilityChange: Date.now() + Math.random() * 15000 + 10000,
                 
                 // Cambio de tamaño
                 targetSize: size,
@@ -343,29 +344,29 @@
             // Cambiar movimiento aleatoriamente
             if (time > state.nextChangeTime) {
                 state.currentMovement = movementNames[Math.floor(Math.random() * movementNames.length)];
-                state.nextChangeTime = time + Math.random() * 8000 + 5000;
+                state.nextChangeTime = time + Math.random() * 6000 + 4000; // Más frecuente
                 
                 // Recalcular parámetros
                 state.centerX = Math.random() * window.innerWidth;
                 state.centerY = Math.random() * window.innerHeight;
-                state.radius = Math.random() * 150 + 100;
-                state.speedX = (Math.random() - 0.5) * 3;
-                state.speedY = (Math.random() - 0.5) * 3;
+                state.radius = Math.random() * 200 + 80;
+                state.speedX = (Math.random() - 0.5) * 4; // Más rápido
+                state.speedY = (Math.random() - 0.5) * 4;
                 
                 createTrail(state.x, state.y);
             }
             
-            // Cambiar visibilidad aleatoriamente
+            // Cambiar visibilidad aleatoriamente (menos frecuente para que haya más visibles)
             if (time > state.nextVisibilityChange) {
-                state.visible = !state.visible;
+                state.visible = Math.random() > 0.2; // 80% de probabilidad de estar visible
                 state.opacity = state.visible ? 1 : 0;
-                state.nextVisibilityChange = time + Math.random() * 10000 + 8000;
+                state.nextVisibilityChange = time + Math.random() * 15000 + 10000;
             }
             
             // Cambiar tamaño aleatoriamente
             if (time > state.nextSizeChange) {
                 state.targetSize = Math.random() * (CONFIG.maxSize - CONFIG.minSize) + CONFIG.minSize;
-                state.nextSizeChange = time + Math.random() * 12000 + 8000;
+                state.nextSizeChange = time + Math.random() * 10000 + 6000;
             }
             
             // Interpolar tamaño suavemente
@@ -426,15 +427,18 @@
         function init() {
             createStars();
             
-            // Crear todas las Ellies
-            CONFIG.ellieImages.forEach((_, index) => {
-                createEllie(index);
+            // Crear múltiples copias de cada Ellie
+            CONFIG.ellieImages.forEach((imageSrc, imageIndex) => {
+                for (let copy = 0; copy < CONFIG.copiesPerImage; copy++) {
+                    createEllie(imageIndex);
+                }
             });
             
             // Iniciar animación
             animate();
             
-            console.log('🐱 Ellieverso caótico activado - 14 Ellies con vida propia');
+            const totalEllies = CONFIG.ellieImages.length * CONFIG.copiesPerImage;
+            console.log(`🐱 Ellieverso caótico activado - ${totalEllies} Ellies con vida propia`);
         }
         
         // Manejar redimensionamiento
