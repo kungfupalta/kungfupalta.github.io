@@ -34,10 +34,9 @@
             width: 100vw;
             height: 100vh;
             position: fixed;
-            cursor: default;
         }
         
-        /* Fondo estelar optimizado */
+        /* Fondo de estrellas */
         #stars {
             position: fixed;
             top: 0;
@@ -45,610 +44,424 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            pointer-events: none;
         }
         
         .star {
             position: absolute;
             background: white;
             border-radius: 50%;
-            opacity: 0;
+            animation: twinkle linear infinite;
         }
         
-        /* Título minimal */
-        #title {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: 'Arial', sans-serif;
-            font-size: 24px;
-            color: rgba(255, 255, 255, 0.6);
-            letter-spacing: 12px;
-            text-transform: uppercase;
-            z-index: 1;
-            opacity: 0.4;
-            font-weight: 100;
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
         
-        /* Contenedor principal optimizado */
+        /* Contenedor del universo */
         #universe {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 100;
+            z-index: 10;
         }
         
-        /* Ellies de tamaño OPTIMIZADO */
+        /* Las Ellies con vida propia */
         .ellie {
             position: absolute;
-            z-index: 100;
-            will-change: transform;
             pointer-events: none;
-            image-rendering: optimizeQuality;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
-            transform-origin: center center;
+            will-change: transform, opacity;
+            transition: opacity 0.5s ease;
         }
         
         .ellie img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            image-rendering: -webkit-optimize-contrast;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
         }
         
-        /* Estados de tamaño */
-        .growing {
-            animation: growCycle 3s ease-in-out infinite alternate;
-        }
-        
-        .shrinking {
-            animation: shrinkCycle 2.5s ease-in-out infinite alternate;
-        }
-        
-        @keyframes growCycle {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.8); }
-        }
-        
-        @keyframes shrinkCycle {
-            0% { transform: scale(1); }
-            100% { transform: scale(0.6); }
-        }
-        
-        /* Partículas optimizadas */
-        .particle {
+        /* Estelas de movimiento */
+        .trail {
             position: absolute;
-            background: white;
             border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.6), transparent);
             pointer-events: none;
-            z-index: 90;
-            opacity: 0;
+            z-index: 5;
         }
     </style>
 </head>
 <body>
-    <!-- Fondo estelar optimizado -->
     <div id="stars"></div>
-    
-    <!-- Título -->
-    <div id="title">ELLIEVERSO</div>
-    
-    <!-- Universo de Ellies -->
     <div id="universe"></div>
     
     <script>
-        // CONFIGURACIÓN OPTIMIZADA PARA RENDIMIENTO
+        // ══════════════════════════════════════════════════════════
+        // CONFIGURACIÓN DEL ELLIEVERSO CAÓTICO
+        // ══════════════════════════════════════════════════════════
         const CONFIG = {
-            totalEllies: 14,
-            minSize: 120,      // MITAD DEL TAMAÑO ANTERIOR
-            maxSize: 220,      // OPTIMIZADO PARA RENDIMIENTO
-            baseSpeed: 0.8,
-            transitionTime: 5000, // Cambia cada 5 segundos
-            particleLimit: 30,   // Límite de partículas para rendimiento
-            
-            // ANIMACIONES DE ÓRBITA (TODAS ORBITAN)
-            orbitAnimations: [
-                'circular-orbit',
-                'elliptical-orbit', 
-                'figure8-orbit',
-                'spiral-orbit',
-                'wave-orbit',
-                'chaotic-orbit',
-                'double-orbit',
-                'expanding-orbit',
-                'contracting-orbit',
-                'zigzag-orbit',
-                'crossover-orbit',
-                'pendulum-orbit',
-                'lissajous-orbit',
-                'flower-orbit'
-            ],
-            
-            // Estados de tamaño
-            sizeStates: ['growing', 'shrinking', 'normal'],
-            
-            // Imágenes del 1 al 14
             ellieImages: [
-                'img/1.png',
-                'img/2.png',
-                'img/3.png',
-                'img/4.png',
-                'img/5.png',
-                'img/6.png',
-                'img/7.png',
-                'img/8.png',
-                'img/9.png',
-                'img/10.png',
-                'img/11.png',
-                'img/12.png',
-                'img/13.png',
-                'img/14.png'
-            ]
+                'img/1.png', 'img/2.png', 'img/3.png', 'img/4.png',
+                'img/5.png', 'img/6.png', 'img/7.png', 'img/8.png',
+                'img/9.png', 'img/10.png', 'img/11.png', 'img/12.png',
+                'img/13.png', 'img/14.png'
+            ],
+            minSize: 80,
+            maxSize: 280,
+            starCount: 200
         };
         
-        // Sistema optimizado
-        let ellies = [];
-        let particles = [];
+        const ellies = [];
+        const universe = document.getElementById('universe');
         let animationFrame;
-        let universe;
         
-        // Inicializar sistema optimizado
-        function initOptimizedSystem() {
-            universe = document.getElementById('universe');
-            createOptimizedStars();
-            createOptimizedEllies();
-            startOptimizedLoop();
-            
-            // Ocultar título
-            setTimeout(() => {
-                document.getElementById('title').style.opacity = '0.2';
-            }, 2000);
-            
-            console.log('Sistema Ellieverso optimizado activado');
-        }
-        
-        // Crear estrellas optimizadas
-        function createOptimizedStars() {
-            const starsContainer = document.getElementById('stars');
-            const starCount = 100; // Reducido para rendimiento
-            
-            for (let i = 0; i < starCount; i++) {
+        // ══════════════════════════════════════════════════════════
+        // CREAR ESTRELLAS DE FONDO
+        // ══════════════════════════════════════════════════════════
+        function createStars() {
+            const container = document.getElementById('stars');
+            for (let i = 0; i < CONFIG.starCount; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
-                
-                // Tamaño pequeño
-                const size = Math.random() * 1.5 + 0.3;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                
-                // Posición aleatoria
+                star.style.width = star.style.height = `${Math.random() * 2 + 1}px`;
                 star.style.left = `${Math.random() * 100}%`;
                 star.style.top = `${Math.random() * 100}%`;
-                
-                // Animación simple
-                const delay = Math.random() * 5;
-                star.style.animation = `starFade 3s ${delay}s infinite alternate`;
-                
-                starsContainer.appendChild(star);
+                star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                container.appendChild(star);
             }
+        }
+        
+        // ══════════════════════════════════════════════════════════
+        // MOVIMIENTOS ALEATORIOS DISPONIBLES
+        // ══════════════════════════════════════════════════════════
+        const MOVEMENTS = {
+            // 1. Flotar suavemente
+            float: (state, time) => {
+                state.x += Math.sin(time * 0.001 + state.seed) * 0.5;
+                state.y += Math.cos(time * 0.0008 + state.seed) * 0.3;
+                state.rotation += 0.1;
+            },
             
-            // Añadir keyframes
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes starFade {
-                    0% { opacity: 0.1; }
-                    100% { opacity: 0.7; }
+            // 2. Movimiento zigzag
+            zigzag: (state, time) => {
+                state.x += Math.sin(time * 0.002) * 2;
+                state.y += state.speedY;
+                if (state.y > window.innerHeight + 100) state.y = -100;
+                state.rotation += 0.5;
+            },
+            
+            // 3. Espiral
+            spiral: (state, time) => {
+                const angle = time * 0.001;
+                const radius = (time * 0.05) % 300;
+                state.x = state.centerX + Math.cos(angle) * radius;
+                state.y = state.centerY + Math.sin(angle) * radius;
+                state.rotation += 1;
+            },
+            
+            // 4. Rebote
+            bounce: (state, time) => {
+                state.x += state.speedX;
+                state.y += state.speedY;
+                
+                if (state.x <= 0 || state.x >= window.innerWidth) state.speedX *= -1;
+                if (state.y <= 0 || state.y >= window.innerHeight) state.speedY *= -1;
+                state.rotation += state.speedX * 0.5;
+            },
+            
+            // 5. Círculos
+            circle: (state, time) => {
+                const angle = time * 0.002 + state.seed;
+                state.x = state.centerX + Math.cos(angle) * state.radius;
+                state.y = state.centerY + Math.sin(angle) * state.radius;
+                state.rotation = angle * 20;
+            },
+            
+            // 6. Ondulación
+            wave: (state, time) => {
+                state.x += state.speedX;
+                state.y = state.baseY + Math.sin(time * 0.003 + state.seed) * 100;
+                if (state.x > window.innerWidth + 100) state.x = -100;
+                state.rotation += 0.3;
+            },
+            
+            // 7. Caída de hojas
+            leaf: (state, time) => {
+                state.x += Math.sin(time * 0.005 + state.seed) * 1.5;
+                state.y += state.speedY * 0.5;
+                state.rotation += Math.sin(time * 0.01) * 2;
+                if (state.y > window.innerHeight + 100) {
+                    state.y = -100;
+                    state.x = Math.random() * window.innerWidth;
                 }
-            `;
-            document.head.appendChild(style);
-        }
-        
-        // Crear Ellies optimizadas
-        function createOptimizedEllies() {
-            for (let i = 0; i < CONFIG.totalEllies; i++) {
-                createEllie(i);
+            },
+            
+            // 8. Aleatorio caótico
+            chaos: (state, time) => {
+                if (Math.random() > 0.98) {
+                    state.speedX = (Math.random() - 0.5) * 4;
+                    state.speedY = (Math.random() - 0.5) * 4;
+                }
+                state.x += state.speedX;
+                state.y += state.speedY;
+                state.rotation += (Math.random() - 0.5) * 3;
+                
+                // Mantener en pantalla
+                if (state.x < -100 || state.x > window.innerWidth + 100) state.speedX *= -1;
+                if (state.y < -100 || state.y > window.innerHeight + 100) state.speedY *= -1;
+            },
+            
+            // 9. Péndulo
+            pendulum: (state, time) => {
+                const swing = Math.sin(time * 0.002 + state.seed) * 200;
+                state.x = state.centerX + swing;
+                state.y = state.centerY + Math.abs(swing) * 0.5;
+                state.rotation = swing * 0.3;
+            },
+            
+            // 10. Teletransporte
+            teleport: (state, time) => {
+                if (time - state.lastTeleport > state.teleportInterval) {
+                    state.x = Math.random() * window.innerWidth;
+                    state.y = Math.random() * window.innerHeight;
+                    state.lastTeleport = time;
+                    state.teleportInterval = Math.random() * 3000 + 2000;
+                }
+                state.rotation += 5;
+            },
+            
+            // 11. Figura 8
+            figure8: (state, time) => {
+                const t = time * 0.001 + state.seed;
+                state.x = state.centerX + Math.sin(t) * 200;
+                state.y = state.centerY + Math.sin(t * 2) * 150;
+                state.rotation = t * 30;
+            },
+            
+            // 12. Explosión y contracción
+            pulse: (state, time) => {
+                const pulse = Math.sin(time * 0.002) * 150;
+                const angle = state.seed;
+                state.x = state.centerX + Math.cos(angle) * pulse;
+                state.y = state.centerY + Math.sin(angle) * pulse;
+                state.scale = 1 + Math.sin(time * 0.002) * 0.5;
+            },
+            
+            // 13. Orbita errática
+            erratic: (state, time) => {
+                const speed = Math.sin(time * 0.001) * 2;
+                state.orbitAngle += 0.02 * speed;
+                const wobble = Math.sin(time * 0.005) * 50;
+                state.x = state.centerX + Math.cos(state.orbitAngle) * (state.radius + wobble);
+                state.y = state.centerY + Math.sin(state.orbitAngle) * (state.radius + wobble);
+                state.rotation += speed * 2;
+            },
+            
+            // 14. Diagonal rebotante
+            diagonal: (state, time) => {
+                state.x += state.speedX;
+                state.y += state.speedY;
+                
+                if (state.x <= 0 || state.x >= window.innerWidth) {
+                    state.speedX *= -1;
+                    state.x = Math.max(0, Math.min(window.innerWidth, state.x));
+                }
+                if (state.y <= 0 || state.y >= window.innerHeight) {
+                    state.speedY *= -1;
+                    state.y = Math.max(0, Math.min(window.innerHeight, state.y));
+                }
+                state.rotation += 0.8;
             }
-        }
+        };
         
-        // Crear una Ellie optimizada
-        function createEllie(id) {
-            const ellie = document.createElement('div');
-            ellie.className = 'ellie';
-            ellie.dataset.id = id;
+        const movementNames = Object.keys(MOVEMENTS);
+        
+        // ══════════════════════════════════════════════════════════
+        // CREAR UNA ELLIE CON ESTADO ALEATORIO
+        // ══════════════════════════════════════════════════════════
+        function createEllie(index) {
+            const element = document.createElement('div');
+            element.className = 'ellie';
             
-            // TAMAÑO OPTIMIZADO (mitad del anterior)
-            const size = CONFIG.minSize + Math.random() * (CONFIG.maxSize - CONFIG.minSize);
-            ellie.style.width = `${size}px`;
-            ellie.style.height = `${size}px`;
-            
-            // Imagen
             const img = document.createElement('img');
-            img.src = CONFIG.ellieImages[id];
-            img.alt = '';
-            img.loading = 'lazy'; // Optimización de carga
+            img.src = CONFIG.ellieImages[index];
+            element.appendChild(img);
             
-            // Fallback optimizado
-            img.onerror = () => {
-                ellie.style.backgroundColor = `rgba(${id * 15}, ${id * 10}, ${id * 20}, 0.1)`;
-                ellie.style.borderRadius = '10px';
-            };
+            universe.appendChild(element);
             
-            ellie.appendChild(img);
-            universe.appendChild(ellie);
+            const size = Math.random() * (CONFIG.maxSize - CONFIG.minSize) + CONFIG.minSize;
+            element.style.width = `${size}px`;
+            element.style.height = `${size}px`;
             
-            // Estado optimizado
             const state = {
-                element: ellie,
-                id: id,
-                // Posición inicial aleatoria
+                element: element,
+                index: index,
                 x: Math.random() * window.innerWidth,
                 y: Math.random() * window.innerHeight,
                 size: size,
-                
-                // Parámetros de órbita
-                orbitType: CONFIG.orbitAnimations[id % CONFIG.orbitAnimations.length],
-                orbitCenterX: Math.random() * window.innerWidth,
-                orbitCenterY: Math.random() * window.innerHeight,
-                orbitRadiusX: 100 + Math.random() * (window.innerWidth / 3),
-                orbitRadiusY: 100 + Math.random() * (window.innerHeight / 3),
-                orbitSpeed: (0.5 + Math.random() * 1.5) * 0.002,
-                orbitAngle: Math.random() * Math.PI * 2,
-                phase: Math.random() * Math.PI * 2,
-                
-                // Estado de tamaño
-                sizeState: CONFIG.sizeStates[id % CONFIG.sizeStates.length],
+                rotation: Math.random() * 360,
                 scale: 1,
-                targetScale: 1,
-                sizeTimer: 0,
-                sizeChangeTime: 3000 + Math.random() * 4000,
+                opacity: 1,
                 
-                // Rotación
-                rotation: 0,
-                rotationSpeed: (Math.random() - 0.5) * 0.5,
+                // Para movimientos
+                speedX: (Math.random() - 0.5) * 3,
+                speedY: (Math.random() - 0.5) * 3,
+                seed: Math.random() * Math.PI * 2,
+                centerX: Math.random() * window.innerWidth,
+                centerY: Math.random() * window.innerHeight,
+                baseY: Math.random() * window.innerHeight,
+                radius: Math.random() * 150 + 100,
+                orbitAngle: Math.random() * Math.PI * 2,
                 
-                // Timer de cambio
-                changeTimer: 0,
-                changeTime: CONFIG.transitionTime + Math.random() * 3000
+                // Control de movimiento
+                currentMovement: movementNames[Math.floor(Math.random() * movementNames.length)],
+                nextChangeTime: Date.now() + Math.random() * 8000 + 5000,
+                
+                // Para teletransporte
+                lastTeleport: 0,
+                teleportInterval: 3000,
+                
+                // Control de visibilidad
+                visible: true,
+                nextVisibilityChange: Date.now() + Math.random() * 10000 + 8000,
+                
+                // Cambio de tamaño
+                targetSize: size,
+                nextSizeChange: Date.now() + Math.random() * 12000 + 8000
             };
             
-            // Aplicar estado inicial
-            updateEllieTransform(state);
-            
-            // Aplicar clase de tamaño
-            if (state.sizeState === 'growing') {
-                ellie.classList.add('growing');
-            } else if (state.sizeState === 'shrinking') {
-                ellie.classList.add('shrinking');
-            }
-            
             ellies.push(state);
-            return state;
         }
         
-        // Loop principal optimizado
-        function startOptimizedLoop() {
-            let lastTime = 0;
-            
-            function optimizedLoop(timestamp) {
-                const delta = timestamp - lastTime || 16; // ~60fps
-                lastTime = timestamp;
+        // ══════════════════════════════════════════════════════════
+        // ACTUALIZAR ELLIE
+        // ══════════════════════════════════════════════════════════
+        function updateEllie(state, time) {
+            // Cambiar movimiento aleatoriamente
+            if (time > state.nextChangeTime) {
+                state.currentMovement = movementNames[Math.floor(Math.random() * movementNames.length)];
+                state.nextChangeTime = time + Math.random() * 8000 + 5000;
                 
-                // Actualizar todas las Ellies
-                for (let i = 0; i < ellies.length; i++) {
-                    updateEllie(ellies[i], delta);
-                }
+                // Recalcular parámetros
+                state.centerX = Math.random() * window.innerWidth;
+                state.centerY = Math.random() * window.innerHeight;
+                state.radius = Math.random() * 150 + 100;
+                state.speedX = (Math.random() - 0.5) * 3;
+                state.speedY = (Math.random() - 0.5) * 3;
                 
-                // Actualizar partículas
-                updateParticles(delta);
-                
-                animationFrame = requestAnimationFrame(optimizedLoop);
+                createTrail(state.x, state.y);
             }
             
-            optimizedLoop(0);
-        }
-        
-        // Actualizar una Ellie
-        function updateEllie(state, delta) {
-            // Actualizar timers
-            state.changeTimer += delta;
-            state.sizeTimer += delta;
-            
-            // Cambiar órbita aleatoriamente
-            if (state.changeTimer >= state.changeTime) {
-                changeOrbit(state);
-                state.changeTimer = 0;
-                state.changeTime = CONFIG.transitionTime + Math.random() * 3000;
+            // Cambiar visibilidad aleatoriamente
+            if (time > state.nextVisibilityChange) {
+                state.visible = !state.visible;
+                state.opacity = state.visible ? 1 : 0;
+                state.nextVisibilityChange = time + Math.random() * 10000 + 8000;
             }
             
-            // Cambiar estado de tamaño
-            if (state.sizeTimer >= state.sizeChangeTime) {
-                changeSizeState(state);
-                state.sizeTimer = 0;
-                state.sizeChangeTime = 3000 + Math.random() * 4000;
+            // Cambiar tamaño aleatoriamente
+            if (time > state.nextSizeChange) {
+                state.targetSize = Math.random() * (CONFIG.maxSize - CONFIG.minSize) + CONFIG.minSize;
+                state.nextSizeChange = time + Math.random() * 12000 + 8000;
             }
             
-            // Actualizar órbita
-            updateOrbit(state, delta);
+            // Interpolar tamaño suavemente
+            state.size += (state.targetSize - state.size) * 0.02;
+            state.element.style.width = `${state.size}px`;
+            state.element.style.height = `${state.size}px`;
             
-            // Actualizar rotación
-            state.rotation += state.rotationSpeed;
-            
-            // Aplicar transformaciones
-            updateEllieTransform(state);
-        }
-        
-        // Cambiar tipo de órbita
-        function changeOrbit(state) {
-            const oldType = state.orbitType;
-            
-            // Seleccionar nueva órbita aleatoria
-            do {
-                const randomIndex = Math.floor(Math.random() * CONFIG.orbitAnimations.length);
-                state.orbitType = CONFIG.orbitAnimations[randomIndex];
-            } while (state.orbitType === oldType && CONFIG.orbitAnimations.length > 1);
-            
-            // Nuevo centro aleatorio
-            state.orbitCenterX = Math.random() * window.innerWidth;
-            state.orbitCenterY = Math.random() * window.innerHeight;
-            
-            // Nuevos radios
-            state.orbitRadiusX = 80 + Math.random() * (window.innerWidth / 4);
-            state.orbitRadiusY = 80 + Math.random() * (window.innerHeight / 4);
-            
-            // Nueva velocidad
-            state.orbitSpeed = (0.3 + Math.random() * 1.2) * 0.002 * (Math.random() > 0.5 ? 1 : -1);
-            
-            // Crear efecto visual
-            createOrbitEffect(state);
-        }
-        
-        // Cambiar estado de tamaño
-        function changeSizeState(state) {
-            const oldState = state.sizeState;
-            
-            // Seleccionar nuevo estado
-            do {
-                const randomIndex = Math.floor(Math.random() * CONFIG.sizeStates.length);
-                state.sizeState = CONFIG.sizeStates[randomIndex];
-            } while (state.sizeState === oldState && CONFIG.sizeStates.length > 1);
-            
-            // Aplicar clases CSS
-            state.element.classList.remove('growing', 'shrinking');
-            
-            if (state.sizeState === 'growing') {
-                state.element.classList.add('growing');
-            } else if (state.sizeState === 'shrinking') {
-                state.element.classList.add('shrinking');
-            }
-        }
-        
-        // Actualizar movimiento orbital
-        function updateOrbit(state, delta) {
-            state.orbitAngle += state.orbitSpeed;
-            
-            let x = 0, y = 0;
-            const time = Date.now() * 0.001;
-            
-            switch(state.orbitType) {
-                // 1. ÓRBITA CIRCULAR
-                case 'circular-orbit':
-                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX;
-                    y = Math.sin(state.orbitAngle) * state.orbitRadiusY;
-                    break;
-                    
-                // 2. ÓRBITA ELÍPTICA
-                case 'elliptical-orbit':
-                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX;
-                    y = Math.sin(state.orbitAngle) * (state.orbitRadiusY * 0.7);
-                    break;
-                    
-                // 3. ÓRBITA EN FORMA DE 8
-                case 'figure8-orbit':
-                    x = Math.sin(state.orbitAngle) * state.orbitRadiusX;
-                    y = Math.sin(state.orbitAngle * 2) * state.orbitRadiusY * 0.5;
-                    break;
-                    
-                // 4. ÓRBITA ESPIRAL
-                case 'spiral-orbit':
-                    const spiralRadius = (state.orbitAngle % (Math.PI * 4)) * 5;
-                    x = Math.cos(state.orbitAngle) * spiralRadius;
-                    y = Math.sin(state.orbitAngle) * spiralRadius;
-                    if (spiralRadius > 300) state.orbitAngle = 0;
-                    break;
-                    
-                // 5. ÓRBITA ONDULADA
-                case 'wave-orbit':
-                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX;
-                    y = Math.sin(state.orbitAngle + Math.sin(time * 0.005)) * state.orbitRadiusY;
-                    break;
-                    
-                // 6. ÓRBITA CAÓTICA
-                case 'chaotic-orbit':
-                    x = Math.cos(state.orbitAngle + Math.sin(time * 0.001)) * state.orbitRadiusX;
-                    y = Math.sin(state.orbitAngle + Math.cos(time * 0.001)) * state.orbitRadiusY;
-                    break;
-                    
-                // 7. ÓRBITA DOBLE
-                case 'double-orbit':
-                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX + 
-                        Math.cos(state.orbitAngle * 2) * (state.orbitRadiusX * 0.3);
-                    y = Math.sin(state.orbitAngle) * state.orbitRadiusY + 
-                        Math.sin(state.orbitAngle * 2) * (state.orbitRadiusY * 0.3);
-                    break;
-                    
-                // 8. ÓRBITA EXPANSIVA
-                case 'expanding-orbit':
-                    const expand = 1 + Math.sin(time * 0.001) * 0.5;
-                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX * expand;
-                    y = Math.sin(state.orbitAngle) * state.orbitRadiusY * expand;
-                    break;
-                    
-                // 9. ÓRBITA CONTRACTIVA
-                case 'contracting-orbit':
-                    const contract = 1 + Math.cos(time * 0.001) * 0.5;
-                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX * contract;
-                    y = Math.sin(state.orbitAngle) * state.orbitRadiusY * contract;
-                    break;
-                    
-                // 10. ÓRBITA ZIGZAG
-                case 'zigzag-orbit':
-                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX;
-                    y = Math.sin(state.orbitAngle * 3) * state.orbitRadiusY;
-                    break;
-                    
-                // 11. ÓRBITA CRUZADA
-                case 'crossover-orbit':
-                    x = Math.sin(state.orbitAngle) * state.orbitRadiusX;
-                    y = Math.cos(state.orbitAngle) * state.orbitRadiusY;
-                    break;
-                    
-                // 12. ÓRBITA PENDULAR
-                case 'pendulum-orbit':
-                    x = Math.sin(state.orbitAngle) * state.orbitRadiusX;
-                    y = Math.cos(state.orbitAngle * 0.5) * state.orbitRadiusY;
-                    break;
-                    
-                // 13. ÓRBITA LISSAJOUS
-                case 'lissajous-orbit':
-                    x = Math.sin(state.orbitAngle * 2) * state.orbitRadiusX;
-                    y = Math.cos(state.orbitAngle * 3) * state.orbitRadiusY;
-                    break;
-                    
-                // 14. ÓRBITA FLORAL
-                case 'flower-orbit':
-                    const flowerRadius = 1 + Math.sin(state.orbitAngle * 5) * 0.3;
-                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX * flowerRadius;
-                    y = Math.sin(state.orbitAngle) * state.orbitRadiusY * flowerRadius;
-                    break;
+            // Ejecutar movimiento actual
+            if (MOVEMENTS[state.currentMovement]) {
+                MOVEMENTS[state.currentMovement](state, time);
             }
             
-            // Aplicar posición con centro
-            state.x = state.orbitCenterX + x;
-            state.y = state.orbitCenterY + y;
-            
-            // Ajustar rotación según movimiento
-            state.rotationSpeed = (x - state.x) * 0.0005;
-        }
-        
-        // Actualizar transformación de Ellie
-        function updateEllieTransform(state) {
-            // Limitar a pantalla (con wrap-around)
-            if (state.x < -state.size) state.x = window.innerWidth + state.size;
-            if (state.x > window.innerWidth + state.size) state.x = -state.size;
-            if (state.y < -state.size) state.y = window.innerHeight + state.size;
-            if (state.y > window.innerHeight + state.size) state.y = -state.size;
-            
-            // Aplicar transformación optimizada
+            // Aplicar transformación
             state.element.style.transform = `
                 translate(${state.x}px, ${state.y}px)
                 rotate(${state.rotation}deg)
+                scale(${state.scale})
             `;
-            
-            // Efecto visual sutil
-            const glow = 3 + Math.abs(Math.sin(Date.now() * 0.001)) * 2;
-            state.element.style.filter = `
-                drop-shadow(0 0 ${glow}px rgba(255, 255, 255, 0.2))
-            `;
+            state.element.style.opacity = state.opacity;
         }
         
-        // Crear efecto visual de cambio de órbita
-        function createOrbitEffect(state) {
-            if (particles.length >= CONFIG.particleLimit) return;
+        // ══════════════════════════════════════════════════════════
+        // CREAR ESTELA DE MOVIMIENTO
+        // ══════════════════════════════════════════════════════════
+        function createTrail(x, y) {
+            const trail = document.createElement('div');
+            trail.className = 'trail';
+            const size = Math.random() * 30 + 20;
+            trail.style.width = `${size}px`;
+            trail.style.height = `${size}px`;
+            trail.style.left = `${x}px`;
+            trail.style.top = `${y}px`;
+            trail.style.opacity = '0.6';
+            universe.appendChild(trail);
             
-            for (let i = 0; i < 3; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                const size = Math.random() * 3 + 1;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                particle.style.left = `${state.x}px`;
-                particle.style.top = `${state.y}px`;
-                
-                universe.appendChild(particle);
-                
-                particles.push({
-                    element: particle,
-                    x: state.x,
-                    y: state.y,
-                    vx: (Math.random() - 0.5) * 4,
-                    vy: (Math.random() - 0.5) * 4,
-                    life: 1
-                });
-            }
+            setTimeout(() => {
+                trail.style.opacity = '0';
+                trail.style.transform = 'scale(2)';
+                trail.style.transition = 'all 1s ease-out';
+                setTimeout(() => trail.remove(), 1000);
+            }, 50);
         }
         
-        // Actualizar partículas
-        function updateParticles(delta) {
-            for (let i = particles.length - 1; i >= 0; i--) {
-                const p = particles[i];
-                
-                p.x += p.vx;
-                p.y += p.vy;
-                p.life -= 0.02;
-                
-                p.element.style.left = `${p.x}px`;
-                p.element.style.top = `${p.y}px`;
-                p.element.style.opacity = p.life;
-                
-                if (p.life <= 0) {
-                    p.element.remove();
-                    particles.splice(i, 1);
-                }
-            }
+        // ══════════════════════════════════════════════════════════
+        // LOOP DE ANIMACIÓN
+        // ══════════════════════════════════════════════════════════
+        function animate() {
+            const time = Date.now();
+            
+            ellies.forEach(state => updateEllie(state, time));
+            
+            animationFrame = requestAnimationFrame(animate);
+        }
+        
+        // ══════════════════════════════════════════════════════════
+        // INICIALIZAR
+        // ══════════════════════════════════════════════════════════
+        function init() {
+            createStars();
+            
+            // Crear todas las Ellies
+            CONFIG.ellieImages.forEach((_, index) => {
+                createEllie(index);
+            });
+            
+            // Iniciar animación
+            animate();
+            
+            console.log('🐱 Ellieverso caótico activado - 14 Ellies con vida propia');
         }
         
         // Manejar redimensionamiento
-        function handleResize() {
-            // Ajustar centros de órbita proporcionalmente
-            const scaleX = window.innerWidth / (window.innerWidth || 1);
-            const scaleY = window.innerHeight / (window.innerHeight || 1);
-            
+        window.addEventListener('resize', () => {
             ellies.forEach(state => {
-                state.orbitCenterX *= scaleX;
-                state.orbitCenterY *= scaleY;
-                state.orbitRadiusX *= scaleX;
-                state.orbitRadiusY *= scaleY;
-            });
-        }
-        
-        // Inicializar cuando cargue
-        window.addEventListener('load', () => {
-            // Precarga optimizada
-            const preloadImage = (src) => {
-                return new Promise(resolve => {
-                    const img = new Image();
-                    img.src = src;
-                    img.decode ? img.decode().then(resolve).catch(resolve) : (img.onload = resolve);
-                });
-            };
-            
-            // Precargar en batches
-            const batchSize = 4;
-            const batches = [];
-            
-            for (let i = 0; i < CONFIG.ellieImages.length; i += batchSize) {
-                batches.push(CONFIG.ellieImages.slice(i, i + batchSize));
-            }
-            
-            // Precargar secuencialmente para mejor rendimiento
-            async function preloadSequentially() {
-                for (const batch of batches) {
-                    await Promise.all(batch.map(preloadImage));
-                    await new Promise(resolve => setTimeout(resolve, 100));
-                }
-            }
-            
-            preloadSequentially().then(() => {
-                setTimeout(initOptimizedSystem, 100);
+                // Reposicionar si está fuera de pantalla
+                if (state.x > window.innerWidth) state.x = window.innerWidth - 100;
+                if (state.y > window.innerHeight) state.y = window.innerHeight - 100;
             });
         });
         
-        window.addEventListener('resize', handleResize);
+        // Precargar imágenes y iniciar
+        window.addEventListener('load', () => {
+            let loadedImages = 0;
+            const totalImages = CONFIG.ellieImages.length;
+            
+            CONFIG.ellieImages.forEach(src => {
+                const img = new Image();
+                img.onload = () => {
+                    loadedImages++;
+                    if (loadedImages === totalImages) {
+                        setTimeout(init, 100);
+                    }
+                };
+                img.src = src;
+            });
+        });
         
         // Limpiar al salir
         window.addEventListener('beforeunload', () => {
@@ -656,8 +469,6 @@
                 cancelAnimationFrame(animationFrame);
             }
         });
-        
-        console.log('Ellieverso: Órbitas optimizadas activadas');
     </script>
 </body>
 </html>
