@@ -2,25 +2,25 @@
 <html lang="es">
 <head>
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-<meta name="theme-color" content="#ffffff">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELLIEVERSO LOCO</title>
+    <title>ELLIEVERSO</title>
     <style>
         * {
             margin: 0;
@@ -29,480 +29,635 @@
         }
         
         body {
-            background: black;
+            background: #000000;
             overflow: hidden;
             width: 100vw;
             height: 100vh;
             position: fixed;
+            cursor: default;
         }
         
-        /* Título loco */
-        #title {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Arial Black', sans-serif;
-            font-size: 15vw;
-            color: white;
-            text-align: center;
-            z-index: 1000;
-            animation: titleCrazy 3s infinite alternate;
+        /* Fondo estelar optimizado */
+        #stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
             pointer-events: none;
-            text-shadow: 0 0 50px white;
-            mix-blend-mode: difference;
         }
         
-        @keyframes titleCrazy {
-            0% { 
-                transform: translate(-50%, -50%) scale(1) rotate(0deg);
-                filter: hue-rotate(0deg) blur(0px);
-                letter-spacing: 5px;
-            }
-            100% { 
-                transform: translate(-50%, -50%) scale(1.5) rotate(10deg);
-                filter: hue-rotate(360deg) blur(3px);
-                letter-spacing: 20px;
-            }
-        }
-        
-        /* Contenedor de fotos locas */
-        .photo {
+        .star {
             position: absolute;
-            cursor: pointer;
-            z-index: 100;
-            transition: transform 0.1s linear;
-            max-width: 40vw;
-            max-height: 40vh;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            will-change: transform, opacity, filter;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
         }
         
-        .photo img {
+        /* Título minimal */
+        #title {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Arial', sans-serif;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            z-index: 1;
+            opacity: 0.4;
+            font-weight: 100;
+        }
+        
+        /* Contenedor principal optimizado */
+        #universe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+        }
+        
+        /* Ellies de tamaño OPTIMIZADO */
+        .ellie {
+            position: absolute;
+            z-index: 100;
+            will-change: transform;
+            pointer-events: none;
+            image-rendering: optimizeQuality;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+            transform-origin: center center;
+        }
+        
+        .ellie img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            pointer-events: none;
+            image-rendering: -webkit-optimize-contrast;
         }
         
-        /* Clases para efectos locos */
-        .crazy-spin {
-            animation: crazySpin 0.5s linear infinite !important;
+        /* Estados de tamaño */
+        .growing {
+            animation: growCycle 3s ease-in-out infinite alternate;
         }
         
-        @keyframes crazySpin {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.5); }
-            100% { transform: rotate(360deg) scale(1); }
+        .shrinking {
+            animation: shrinkCycle 2.5s ease-in-out infinite alternate;
         }
         
-        .crazy-bounce {
-            animation: crazyBounce 0.7s ease-in-out infinite alternate !important;
+        @keyframes growCycle {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.8); }
         }
         
-        @keyframes crazyBounce {
-            0% { transform: translateY(0px) scale(1); }
-            100% { transform: translateY(-100px) scale(1.3); }
+        @keyframes shrinkCycle {
+            0% { transform: scale(1); }
+            100% { transform: scale(0.6); }
         }
         
-        .crazy-shake {
-            animation: crazyShake 0.2s linear infinite !important;
-        }
-        
-        @keyframes crazyShake {
-            0%, 100% { transform: translateX(0px) rotate(0deg); }
-            25% { transform: translateX(-50px) rotate(-10deg); }
-            75% { transform: translateX(50px) rotate(10deg); }
-        }
-        
-        .crazy-pulse {
-            animation: crazyPulse 0.4s ease-in-out infinite alternate !important;
-        }
-        
-        @keyframes crazyPulse {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(2); opacity: 0.7; }
-        }
-        
-        .crazy-explode {
-            animation: crazyExplode 1s forwards !important;
-        }
-        
-        @keyframes crazyExplode {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(3); opacity: 0.5; filter: blur(10px); }
-            100% { transform: scale(0); opacity: 0; filter: blur(20px); }
-        }
-        
-        .crazy-appear {
-            animation: crazyAppear 0.5s forwards !important;
-        }
-        
-        @keyframes crazyAppear {
-            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
-        }
-        
-        .crazy-warp {
-            animation: crazyWarp 2s linear infinite !important;
-        }
-        
-        @keyframes crazyWarp {
-            0% { transform: perspective(500px) rotateX(0deg) rotateY(0deg); }
-            25% { transform: perspective(500px) rotateX(90deg) rotateY(90deg); }
-            50% { transform: perspective(500px) rotateX(180deg) rotateY(180deg); }
-            75% { transform: perspective(500px) rotateX(270deg) rotateY(270deg); }
-            100% { transform: perspective(500px) rotateX(360deg) rotateY(360deg); }
-        }
-        
-        .crazy-trail {
-            animation: crazyTrail 0.5s linear infinite !important;
-        }
-        
-        @keyframes crazyTrail {
-            0% { filter: drop-shadow(0 0 0px white) hue-rotate(0deg); }
-            100% { filter: drop-shadow(0 0 50px white) hue-rotate(360deg); }
-        }
-        
-        /* Efectos de partículas */
+        /* Partículas optimizadas */
         .particle {
             position: absolute;
             background: white;
             border-radius: 50%;
             pointer-events: none;
-            z-index: 50;
+            z-index: 90;
+            opacity: 0;
         }
     </style>
 </head>
 <body>
-    <!-- Título loco -->
+    <!-- Fondo estelar optimizado -->
+    <div id="stars"></div>
+    
+    <!-- Título -->
     <div id="title">ELLIEVERSO</div>
     
-    <!-- Las fotos se crearán con JavaScript -->
+    <!-- Universo de Ellies -->
+    <div id="universe"></div>
     
     <script>
-        // Configuración
-        const TOTAL_PHOTOS = 15; // Más fotos para más locura
-        const MIN_SIZE = 200; // Tamaño mínimo en píxeles
-        const MAX_SIZE = 500; // Tamaño máximo en píxeles
-        const EFFECTS = [
-            'crazy-spin', 'crazy-bounce', 'crazy-shake', 
-            'crazy-pulse', 'crazy-warp', 'crazy-trail'
-        ];
-        
-        let photos = [];
-        let crazyMode = true;
-        
-        // Lista de imágenes de Ellie (reemplaza con tus imágenes)
-        const ellieImages = [
-            'img/1.png',
-            'img/2.png',
-            'img/IMG-20240705-WA0315-removebg-preview.png',
-            'img/4.png',
-            'img/5.png',
-            'img/6.png',
-            'img/7.png',
-            'img/8.png',
-            'img/9.png',
-            'img/10.png'
-        ];
-        
-        // Crear fotos locas
-        function createCrazyPhotos() {
-            const container = document.body;
+        // CONFIGURACIÓN OPTIMIZADA PARA RENDIMIENTO
+        const CONFIG = {
+            totalEllies: 14,
+            minSize: 120,      // MITAD DEL TAMAÑO ANTERIOR
+            maxSize: 220,      // OPTIMIZADO PARA RENDIMIENTO
+            baseSpeed: 0.8,
+            transitionTime: 5000, // Cambia cada 5 segundos
+            particleLimit: 30,   // Límite de partículas para rendimiento
             
-            for (let i = 0; i < TOTAL_PHOTOS; i++) {
-                // Seleccionar imagen aleatoria (repite si es necesario)
-                const imgSrc = ellieImages[i % ellieImages.length];
+            // ANIMACIONES DE ÓRBITA (TODAS ORBITAN)
+            orbitAnimations: [
+                'circular-orbit',
+                'elliptical-orbit', 
+                'figure8-orbit',
+                'spiral-orbit',
+                'wave-orbit',
+                'chaotic-orbit',
+                'double-orbit',
+                'expanding-orbit',
+                'contracting-orbit',
+                'zigzag-orbit',
+                'crossover-orbit',
+                'pendulum-orbit',
+                'lissajous-orbit',
+                'flower-orbit'
+            ],
+            
+            // Estados de tamaño
+            sizeStates: ['growing', 'shrinking', 'normal'],
+            
+            // Imágenes del 1 al 14
+            ellieImages: [
+                'img/1.png',
+                'img/2.png',
+                'img/3.png',
+                'img/4.png',
+                'img/5.png',
+                'img/6.png',
+                'img/7.png',
+                'img/8.png',
+                'img/9.png',
+                'img/10.png',
+                'img/11.png',
+                'img/12.png',
+                'img/13.png',
+                'img/14.png'
+            ]
+        };
+        
+        // Sistema optimizado
+        let ellies = [];
+        let particles = [];
+        let animationFrame;
+        let universe;
+        
+        // Inicializar sistema optimizado
+        function initOptimizedSystem() {
+            universe = document.getElementById('universe');
+            createOptimizedStars();
+            createOptimizedEllies();
+            startOptimizedLoop();
+            
+            // Ocultar título
+            setTimeout(() => {
+                document.getElementById('title').style.opacity = '0.2';
+            }, 2000);
+            
+            console.log('Sistema Ellieverso optimizado activado');
+        }
+        
+        // Crear estrellas optimizadas
+        function createOptimizedStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 100; // Reducido para rendimiento
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
                 
-                // Crear elemento de foto
-                const photo = document.createElement('div');
-                photo.className = 'photo';
-                photo.dataset.id = i;
+                // Tamaño pequeño
+                const size = Math.random() * 1.5 + 0.3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
                 
-                // Crear imagen
-                const img = document.createElement('img');
-                img.src = imgSrc;
-                img.alt = `Ellie loca ${i + 1}`;
-                img.onerror = function() {
-                    // Si la imagen falla, crear una placeholder
-                    this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect width="100%" height="100%" fill="white"/><text x="50%" y="50%" font-family="Arial" font-size="20" fill="black" text-anchor="middle" dy=".3em">ELLIE</text></svg>';
-                };
+                // Posición aleatoria
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
                 
-                photo.appendChild(img);
-                container.appendChild(photo);
+                // Animación simple
+                const delay = Math.random() * 5;
+                star.style.animation = `starFade 3s ${delay}s infinite alternate`;
                 
-                // Configurar posición y tamaño inicial
-                setupPhoto(photo, i);
+                starsContainer.appendChild(star);
+            }
+            
+            // Añadir keyframes
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes starFade {
+                    0% { opacity: 0.1; }
+                    100% { opacity: 0.7; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Crear Ellies optimizadas
+        function createOptimizedEllies() {
+            for (let i = 0; i < CONFIG.totalEllies; i++) {
+                createEllie(i);
+            }
+        }
+        
+        // Crear una Ellie optimizada
+        function createEllie(id) {
+            const ellie = document.createElement('div');
+            ellie.className = 'ellie';
+            ellie.dataset.id = id;
+            
+            // TAMAÑO OPTIMIZADO (mitad del anterior)
+            const size = CONFIG.minSize + Math.random() * (CONFIG.maxSize - CONFIG.minSize);
+            ellie.style.width = `${size}px`;
+            ellie.style.height = `${size}px`;
+            
+            // Imagen
+            const img = document.createElement('img');
+            img.src = CONFIG.ellieImages[id];
+            img.alt = '';
+            img.loading = 'lazy'; // Optimización de carga
+            
+            // Fallback optimizado
+            img.onerror = () => {
+                ellie.style.backgroundColor = `rgba(${id * 15}, ${id * 10}, ${id * 20}, 0.1)`;
+                ellie.style.borderRadius = '10px';
+            };
+            
+            ellie.appendChild(img);
+            universe.appendChild(ellie);
+            
+            // Estado optimizado
+            const state = {
+                element: ellie,
+                id: id,
+                // Posición inicial aleatoria
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                size: size,
                 
-                // Agregar a la lista
-                photos.push({
-                    element: photo,
-                    x: parseFloat(photo.style.left),
-                    y: parseFloat(photo.style.top),
-                    size: parseFloat(photo.style.width),
-                    vx: (Math.random() - 0.5) * 10,
-                    vy: (Math.random() - 0.5) * 10,
-                    rotation: 0,
-                    vr: (Math.random() - 0.5) * 10
+                // Parámetros de órbita
+                orbitType: CONFIG.orbitAnimations[id % CONFIG.orbitAnimations.length],
+                orbitCenterX: Math.random() * window.innerWidth,
+                orbitCenterY: Math.random() * window.innerHeight,
+                orbitRadiusX: 100 + Math.random() * (window.innerWidth / 3),
+                orbitRadiusY: 100 + Math.random() * (window.innerHeight / 3),
+                orbitSpeed: (0.5 + Math.random() * 1.5) * 0.002,
+                orbitAngle: Math.random() * Math.PI * 2,
+                phase: Math.random() * Math.PI * 2,
+                
+                // Estado de tamaño
+                sizeState: CONFIG.sizeStates[id % CONFIG.sizeStates.length],
+                scale: 1,
+                targetScale: 1,
+                sizeTimer: 0,
+                sizeChangeTime: 3000 + Math.random() * 4000,
+                
+                // Rotación
+                rotation: 0,
+                rotationSpeed: (Math.random() - 0.5) * 0.5,
+                
+                // Timer de cambio
+                changeTimer: 0,
+                changeTime: CONFIG.transitionTime + Math.random() * 3000
+            };
+            
+            // Aplicar estado inicial
+            updateEllieTransform(state);
+            
+            // Aplicar clase de tamaño
+            if (state.sizeState === 'growing') {
+                ellie.classList.add('growing');
+            } else if (state.sizeState === 'shrinking') {
+                ellie.classList.add('shrinking');
+            }
+            
+            ellies.push(state);
+            return state;
+        }
+        
+        // Loop principal optimizado
+        function startOptimizedLoop() {
+            let lastTime = 0;
+            
+            function optimizedLoop(timestamp) {
+                const delta = timestamp - lastTime || 16; // ~60fps
+                lastTime = timestamp;
+                
+                // Actualizar todas las Ellies
+                for (let i = 0; i < ellies.length; i++) {
+                    updateEllie(ellies[i], delta);
+                }
+                
+                // Actualizar partículas
+                updateParticles(delta);
+                
+                animationFrame = requestAnimationFrame(optimizedLoop);
+            }
+            
+            optimizedLoop(0);
+        }
+        
+        // Actualizar una Ellie
+        function updateEllie(state, delta) {
+            // Actualizar timers
+            state.changeTimer += delta;
+            state.sizeTimer += delta;
+            
+            // Cambiar órbita aleatoriamente
+            if (state.changeTimer >= state.changeTime) {
+                changeOrbit(state);
+                state.changeTimer = 0;
+                state.changeTime = CONFIG.transitionTime + Math.random() * 3000;
+            }
+            
+            // Cambiar estado de tamaño
+            if (state.sizeTimer >= state.sizeChangeTime) {
+                changeSizeState(state);
+                state.sizeTimer = 0;
+                state.sizeChangeTime = 3000 + Math.random() * 4000;
+            }
+            
+            // Actualizar órbita
+            updateOrbit(state, delta);
+            
+            // Actualizar rotación
+            state.rotation += state.rotationSpeed;
+            
+            // Aplicar transformaciones
+            updateEllieTransform(state);
+        }
+        
+        // Cambiar tipo de órbita
+        function changeOrbit(state) {
+            const oldType = state.orbitType;
+            
+            // Seleccionar nueva órbita aleatoria
+            do {
+                const randomIndex = Math.floor(Math.random() * CONFIG.orbitAnimations.length);
+                state.orbitType = CONFIG.orbitAnimations[randomIndex];
+            } while (state.orbitType === oldType && CONFIG.orbitAnimations.length > 1);
+            
+            // Nuevo centro aleatorio
+            state.orbitCenterX = Math.random() * window.innerWidth;
+            state.orbitCenterY = Math.random() * window.innerHeight;
+            
+            // Nuevos radios
+            state.orbitRadiusX = 80 + Math.random() * (window.innerWidth / 4);
+            state.orbitRadiusY = 80 + Math.random() * (window.innerHeight / 4);
+            
+            // Nueva velocidad
+            state.orbitSpeed = (0.3 + Math.random() * 1.2) * 0.002 * (Math.random() > 0.5 ? 1 : -1);
+            
+            // Crear efecto visual
+            createOrbitEffect(state);
+        }
+        
+        // Cambiar estado de tamaño
+        function changeSizeState(state) {
+            const oldState = state.sizeState;
+            
+            // Seleccionar nuevo estado
+            do {
+                const randomIndex = Math.floor(Math.random() * CONFIG.sizeStates.length);
+                state.sizeState = CONFIG.sizeStates[randomIndex];
+            } while (state.sizeState === oldState && CONFIG.sizeStates.length > 1);
+            
+            // Aplicar clases CSS
+            state.element.classList.remove('growing', 'shrinking');
+            
+            if (state.sizeState === 'growing') {
+                state.element.classList.add('growing');
+            } else if (state.sizeState === 'shrinking') {
+                state.element.classList.add('shrinking');
+            }
+        }
+        
+        // Actualizar movimiento orbital
+        function updateOrbit(state, delta) {
+            state.orbitAngle += state.orbitSpeed;
+            
+            let x = 0, y = 0;
+            const time = Date.now() * 0.001;
+            
+            switch(state.orbitType) {
+                // 1. ÓRBITA CIRCULAR
+                case 'circular-orbit':
+                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX;
+                    y = Math.sin(state.orbitAngle) * state.orbitRadiusY;
+                    break;
+                    
+                // 2. ÓRBITA ELÍPTICA
+                case 'elliptical-orbit':
+                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX;
+                    y = Math.sin(state.orbitAngle) * (state.orbitRadiusY * 0.7);
+                    break;
+                    
+                // 3. ÓRBITA EN FORMA DE 8
+                case 'figure8-orbit':
+                    x = Math.sin(state.orbitAngle) * state.orbitRadiusX;
+                    y = Math.sin(state.orbitAngle * 2) * state.orbitRadiusY * 0.5;
+                    break;
+                    
+                // 4. ÓRBITA ESPIRAL
+                case 'spiral-orbit':
+                    const spiralRadius = (state.orbitAngle % (Math.PI * 4)) * 5;
+                    x = Math.cos(state.orbitAngle) * spiralRadius;
+                    y = Math.sin(state.orbitAngle) * spiralRadius;
+                    if (spiralRadius > 300) state.orbitAngle = 0;
+                    break;
+                    
+                // 5. ÓRBITA ONDULADA
+                case 'wave-orbit':
+                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX;
+                    y = Math.sin(state.orbitAngle + Math.sin(time * 0.005)) * state.orbitRadiusY;
+                    break;
+                    
+                // 6. ÓRBITA CAÓTICA
+                case 'chaotic-orbit':
+                    x = Math.cos(state.orbitAngle + Math.sin(time * 0.001)) * state.orbitRadiusX;
+                    y = Math.sin(state.orbitAngle + Math.cos(time * 0.001)) * state.orbitRadiusY;
+                    break;
+                    
+                // 7. ÓRBITA DOBLE
+                case 'double-orbit':
+                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX + 
+                        Math.cos(state.orbitAngle * 2) * (state.orbitRadiusX * 0.3);
+                    y = Math.sin(state.orbitAngle) * state.orbitRadiusY + 
+                        Math.sin(state.orbitAngle * 2) * (state.orbitRadiusY * 0.3);
+                    break;
+                    
+                // 8. ÓRBITA EXPANSIVA
+                case 'expanding-orbit':
+                    const expand = 1 + Math.sin(time * 0.001) * 0.5;
+                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX * expand;
+                    y = Math.sin(state.orbitAngle) * state.orbitRadiusY * expand;
+                    break;
+                    
+                // 9. ÓRBITA CONTRACTIVA
+                case 'contracting-orbit':
+                    const contract = 1 + Math.cos(time * 0.001) * 0.5;
+                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX * contract;
+                    y = Math.sin(state.orbitAngle) * state.orbitRadiusY * contract;
+                    break;
+                    
+                // 10. ÓRBITA ZIGZAG
+                case 'zigzag-orbit':
+                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX;
+                    y = Math.sin(state.orbitAngle * 3) * state.orbitRadiusY;
+                    break;
+                    
+                // 11. ÓRBITA CRUZADA
+                case 'crossover-orbit':
+                    x = Math.sin(state.orbitAngle) * state.orbitRadiusX;
+                    y = Math.cos(state.orbitAngle) * state.orbitRadiusY;
+                    break;
+                    
+                // 12. ÓRBITA PENDULAR
+                case 'pendulum-orbit':
+                    x = Math.sin(state.orbitAngle) * state.orbitRadiusX;
+                    y = Math.cos(state.orbitAngle * 0.5) * state.orbitRadiusY;
+                    break;
+                    
+                // 13. ÓRBITA LISSAJOUS
+                case 'lissajous-orbit':
+                    x = Math.sin(state.orbitAngle * 2) * state.orbitRadiusX;
+                    y = Math.cos(state.orbitAngle * 3) * state.orbitRadiusY;
+                    break;
+                    
+                // 14. ÓRBITA FLORAL
+                case 'flower-orbit':
+                    const flowerRadius = 1 + Math.sin(state.orbitAngle * 5) * 0.3;
+                    x = Math.cos(state.orbitAngle) * state.orbitRadiusX * flowerRadius;
+                    y = Math.sin(state.orbitAngle) * state.orbitRadiusY * flowerRadius;
+                    break;
+            }
+            
+            // Aplicar posición con centro
+            state.x = state.orbitCenterX + x;
+            state.y = state.orbitCenterY + y;
+            
+            // Ajustar rotación según movimiento
+            state.rotationSpeed = (x - state.x) * 0.0005;
+        }
+        
+        // Actualizar transformación de Ellie
+        function updateEllieTransform(state) {
+            // Limitar a pantalla (con wrap-around)
+            if (state.x < -state.size) state.x = window.innerWidth + state.size;
+            if (state.x > window.innerWidth + state.size) state.x = -state.size;
+            if (state.y < -state.size) state.y = window.innerHeight + state.size;
+            if (state.y > window.innerHeight + state.size) state.y = -state.size;
+            
+            // Aplicar transformación optimizada
+            state.element.style.transform = `
+                translate(${state.x}px, ${state.y}px)
+                rotate(${state.rotation}deg)
+            `;
+            
+            // Efecto visual sutil
+            const glow = 3 + Math.abs(Math.sin(Date.now() * 0.001)) * 2;
+            state.element.style.filter = `
+                drop-shadow(0 0 ${glow}px rgba(255, 255, 255, 0.2))
+            `;
+        }
+        
+        // Crear efecto visual de cambio de órbita
+        function createOrbitEffect(state) {
+            if (particles.length >= CONFIG.particleLimit) return;
+            
+            for (let i = 0; i < 3; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 3 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.left = `${state.x}px`;
+                particle.style.top = `${state.y}px`;
+                
+                universe.appendChild(particle);
+                
+                particles.push({
+                    element: particle,
+                    x: state.x,
+                    y: state.y,
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: (Math.random() - 0.5) * 4,
+                    life: 1
                 });
             }
         }
         
-        // Configurar foto inicial
-        function setupPhoto(photo, index) {
-            const size = MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE);
+        // Actualizar partículas
+        function updateParticles(delta) {
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= 0.02;
+                
+                p.element.style.left = `${p.x}px`;
+                p.element.style.top = `${p.y}px`;
+                p.element.style.opacity = p.life;
+                
+                if (p.life <= 0) {
+                    p.element.remove();
+                    particles.splice(i, 1);
+                }
+            }
+        }
+        
+        // Manejar redimensionamiento
+        function handleResize() {
+            // Ajustar centros de órbita proporcionalmente
+            const scaleX = window.innerWidth / (window.innerWidth || 1);
+            const scaleY = window.innerHeight / (window.innerHeight || 1);
             
-            // Posición aleatoria pero distribuida
-            const cols = 4;
-            const rows = Math.ceil(TOTAL_PHOTOS / cols);
-            const col = index % cols;
-            const row = Math.floor(index / cols);
-            
-            const x = (col * (100 / cols)) + (Math.random() * 20 - 10);
-            const y = (row * (100 / rows)) + (Math.random() * 20 - 10);
-            
-            photo.style.width = `${size}px`;
-            photo.style.height = `${size}px`;
-            photo.style.left = `${x}%`;
-            photo.style.top = `${y}%`;
-            
-            // Rotación inicial aleatoria
-            photo.style.transform = `rotate(${Math.random() * 360}deg)`;
-            
-            // Aplicar efecto aleatorio
-            applyRandomEffect(photo);
-            
-            // Evento de clic para efectos especiales
-            photo.addEventListener('click', function(e) {
-                triggerSpecialEffect(this);
-                e.stopPropagation();
+            ellies.forEach(state => {
+                state.orbitCenterX *= scaleX;
+                state.orbitCenterY *= scaleY;
+                state.orbitRadiusX *= scaleX;
+                state.orbitRadiusY *= scaleY;
             });
         }
         
-        // Aplicar efecto aleatorio
-        function applyRandomEffect(photo) {
-            // Remover efectos anteriores
-            EFFECTS.forEach(effect => photo.classList.remove(effect));
+        // Inicializar cuando cargue
+        window.addEventListener('load', () => {
+            // Precarga optimizada
+            const preloadImage = (src) => {
+                return new Promise(resolve => {
+                    const img = new Image();
+                    img.src = src;
+                    img.decode ? img.decode().then(resolve).catch(resolve) : (img.onload = resolve);
+                });
+            };
             
-            // Aplicar nuevo efecto aleatorio
-            const randomEffect = EFFECTS[Math.floor(Math.random() * EFFECTS.length)];
-            photo.classList.add(randomEffect);
+            // Precargar en batches
+            const batchSize = 4;
+            const batches = [];
             
-            // Cambiar efecto periódicamente
-            setTimeout(() => {
-                if (crazyMode) applyRandomEffect(photo);
-            }, 2000 + Math.random() * 3000);
-        }
-        
-        // Efecto especial al hacer clic
-        function triggerSpecialEffect(photo) {
-            // Efecto de explosión
-            photo.classList.add('crazy-explode');
-            
-            // Crear partículas
-            createParticles(photo);
-            
-            // Reaparecer después
-            setTimeout(() => {
-                if (!crazyMode) return;
-                
-                photo.classList.remove('crazy-explode');
-                photo.classList.add('crazy-appear');
-                
-                // Nueva posición aleatoria
-                photo.style.left = `${Math.random() * 80 + 10}%`;
-                photo.style.top = `${Math.random() * 80 + 10}%`;
-                
-                // Nuevo tamaño
-                const newSize = MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE);
-                photo.style.width = `${newSize}px`;
-                photo.style.height = `${newSize}px`;
-                
-                // Aplicar efecto aleatorio nuevo
-                setTimeout(() => {
-                    photo.classList.remove('crazy-appear');
-                    applyRandomEffect(photo);
-                }, 500);
-            }, 1000);
-        }
-        
-        // Crear partículas para efectos
-        function createParticles(sourceElement) {
-            const rect = sourceElement.getBoundingClientRect();
-            const particleCount = 30;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                // Tamaño aleatorio
-                const size = Math.random() * 10 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                // Posición inicial (centro de la foto)
-                particle.style.left = `${rect.left + rect.width / 2}px`;
-                particle.style.top = `${rect.top + rect.height / 2}px`;
-                
-                // Velocidad aleatoria
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 5 + 2;
-                const vx = Math.cos(angle) * speed;
-                const vy = Math.sin(angle) * speed;
-                
-                document.body.appendChild(particle);
-                
-                // Animar partícula
-                animateParticle(particle, vx, vy);
+            for (let i = 0; i < CONFIG.ellieImages.length; i += batchSize) {
+                batches.push(CONFIG.ellieImages.slice(i, i + batchSize));
             }
-        }
-        
-        // Animar partícula
-        function animateParticle(particle, vx, vy) {
-            let x = parseFloat(particle.style.left);
-            let y = parseFloat(particle.style.top);
-            let opacity = 1;
             
-            function update() {
-                x += vx;
-                y += vy;
-                opacity -= 0.02;
-                
-                particle.style.left = `${x}px`;
-                particle.style.top = `${y}px`;
-                particle.style.opacity = opacity;
-                
-                if (opacity > 0) {
-                    requestAnimationFrame(update);
-                } else {
-                    particle.remove();
+            // Precargar secuencialmente para mejor rendimiento
+            async function preloadSequentially() {
+                for (const batch of batches) {
+                    await Promise.all(batch.map(preloadImage));
+                    await new Promise(resolve => setTimeout(resolve, 100));
                 }
             }
             
-            update();
-        }
-        
-        // Movimiento físico caótico
-        function updatePhysics() {
-            if (!crazyMode) return;
-            
-            photos.forEach(photoObj => {
-                const photo = photoObj.element;
-                
-                // Actualizar posición
-                photoObj.x += photoObj.vx;
-                photoObj.y += photoObj.vy;
-                photoObj.rotation += photoObj.vr;
-                
-                // Rebotes en los bordes
-                const rect = photo.getBoundingClientRect();
-                
-                if (photoObj.x < 0 || photoObj.x > window.innerWidth - rect.width) {
-                    photoObj.vx *= -1;
-                    photoObj.x = Math.max(0, Math.min(photoObj.x, window.innerWidth - rect.width));
-                }
-                
-                if (photoObj.y < 0 || photoObj.y > window.innerHeight - rect.height) {
-                    photoObj.vy *= -1;
-                    photoObj.y = Math.max(0, Math.min(photoObj.y, window.innerHeight - rect.height));
-                }
-                
-                // Aplicar transformación
-                photo.style.left = `${photoObj.x}px`;
-                photo.style.top = `${photoObj.y}px`;
-                
-                // Solo rotar si no tiene efecto de spin
-                if (!photo.classList.contains('crazy-spin') && !photo.classList.contains('crazy-warp')) {
-                    photo.style.transform = `rotate(${photoObj.rotation}deg)`;
-                }
-                
-                // Cambios aleatorios de dirección
-                if (Math.random() < 0.01) {
-                    photoObj.vx = (Math.random() - 0.5) * 15;
-                    photoObj.vy = (Math.random() - 0.5) * 15;
-                    photoObj.vr = (Math.random() - 0.5) * 15;
-                }
-                
-                // Cambio aleatorio de tamaño
-                if (Math.random() < 0.005) {
-                    const newSize = MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE);
-                    photo.style.width = `${newSize}px`;
-                    photo.style.height = `${newSize}px`;
-                    photoObj.size = newSize;
-                }
-            });
-            
-            requestAnimationFrame(updatePhysics);
-        }
-        
-        // Evento de clic en el cuerpo para efecto masivo
-        document.body.addEventListener('click', function(e) {
-            if (e.target.classList.contains('photo')) return;
-            
-            // Efecto en todas las fotos
-            photos.forEach(photoObj => {
-                if (Math.random() > 0.3) {
-                    triggerSpecialEffect(photoObj.element);
-                }
-            });
-            
-            // Cambiar título
-            const title = document.getElementById('title');
-            title.style.animation = 'none';
-            setTimeout(() => {
-                title.style.animation = 'titleCrazy 1s infinite alternate';
-            }, 10);
-        });
-        
-        // Efecto de título intermitente
-        function crazyTitle() {
-            if (!crazyMode) return;
-            
-            const title = document.getElementById('title');
-            
-            // Cambios locos aleatorios
-            if (Math.random() < 0.1) {
-                title.style.fontSize = `${10 + Math.random() * 20}vw`;
-                title.style.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-                title.style.textShadow = `0 0 ${30 + Math.random() * 70}px white`;
-            }
-            
-            setTimeout(crazyTitle, 100);
-        }
-        
-        // Inicializar
-        function init() {
-            createCrazyPhotos();
-            updatePhysics();
-            crazyTitle();
-            
-            // Ocultar título después de 5 segundos
-            setTimeout(() => {
-                const title = document.getElementById('title');
-                title.style.opacity = '0.2';
-                title.style.transition = 'opacity 2s';
-            }, 5000);
-        }
-        
-        // Cargar imágenes primero
-        window.addEventListener('load', init);
-        
-        // Redimensionar
-        window.addEventListener('resize', function() {
-            // Reposicionar fotos al redimensionar
-            photos.forEach((photoObj, index) => {
-                const photo = photoObj.element;
-                photoObj.x = Math.random() * (window.innerWidth - photoObj.size);
-                photoObj.y = Math.random() * (window.innerHeight - photoObj.size);
+            preloadSequentially().then(() => {
+                setTimeout(initOptimizedSystem, 100);
             });
         });
         
-        // Instrucción de consola
-        console.log('🎉 ¡BIENVENIDO AL ELLIEVERSO LOCO! 🎉');
-        console.log('Haz clic en las fotos de Ellie para hacerlas explotar');
-        console.log('Haz clic en cualquier otro lado para caos total');
-        console.log('Disfruta del viaje psicodélico felino 🐱💥');
+        window.addEventListener('resize', handleResize);
+        
+        // Limpiar al salir
+        window.addEventListener('beforeunload', () => {
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+            }
+        });
+        
+        console.log('Ellieverso: Órbitas optimizadas activadas');
     </script>
 </body>
 </html>
